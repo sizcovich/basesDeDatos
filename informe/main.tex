@@ -69,6 +69,7 @@ El sistema debe asegurar lo siguiente:
 \end{itemize}
 
 Para lograr esto, debimos realizar un \textbf{Modelo de Entidad Relación} y su \textbf{Modelo Relacional} derivado. Luego, fue necesario diseñar la solución de forma física implementada en el motor de base de datos elegido. Por otro lado, realizamos el código correspondiente a las consultas/stored procedures/triggers pedidos. Finalmente, desarrollamos nuestros propios tests correspondientes a las funcionalidades de la API y extrajimos las conclusiones de la integralidad del trabajo práctico.
+
 \newpage
 \section{Modelo de Entidad Relación}
 
@@ -77,12 +78,17 @@ Para lograr esto, debimos realizar un \textbf{Modelo de Entidad Relación} y su 
 \subsection{Restricciones}
 Presentamos las restricciones del Diagrama en lenguaje natural:
 \begin{itemize}
-\item Si un ciudadano preside una mesa, no puede ser ni vicepresidente, ni fiscal, ni técnico para otra mesa en esa elección, como tampoco chofer de ninguna camioneta de esa elección.
-\item Si un ciudadano es vicepresidente de una mesa, no puede ser ni presidente, ni fiscal, ni técnico para otra mesa en esa elección, como tampoco chofer de ninguna camioneta de esa elección.
-\item Si un ciudadano es técnico de una mesa, no puede ser ni vicepresidente, ni fiscal, ni presidente para otra mesa en esa elección, como tampoco chofer de ninguna camioneta de esa elección.
-\item Si un ciudadano es chofer para un centro, no puede ser ni vicepresidente, ni fiscal, ni técnico para alguna mesa en esa elección.
-y para fiscal parecido, solo que puede ser fiscal de muchas mesas, pero no puede presidir, ni vice-presidir, ni ser tecnico, ni chofer
-\item Una camioneta no puede atender a un mesa cuya eleccion no esta en las elecciones en las que participa
+\item Un ciudadano puede: presidir una mesa, o ser vicepresidente, o fiscal, o técnico, o chofer de camioneta, o ninguna de las anteriores. No puede desempeñar más de uno de los roles mencionados en una elección.
+\item En una mesa se puede votar por una lista sólo si esa mesa pertenece a una elección de cargo.
+\item En una mesa se puede votar por una opción (sí/no) sólo si esa mesa pertenece a una consulta popular.
+\item Un ciudadano puede votar sólo en la mesa que le fue asignada en el padrón electoral.
+\item Un candidato no puede figurar en dos listas distintas en una elección.
+\item Un ciudadano no puede votar dos veces en una misma elección.
+\item Un ciudadano puede presidir, vice-presidir, fiscalizar o ser el técnico encargado de hasta una mesa por elección.
+\item Una camioneta puede estar asignada a un sólo centro.
+\item En una mesa o bien se votan lista, o bien se votan opciones, según el tipo de elección en la que participe.
+\item La camioneta que conduce un ciudadano para una elección debe estar asignada a esa misma elección.
+
 \end{itemize}
 \newpage
 \section{Modelo Relacional}
@@ -93,20 +99,20 @@ Para un correcto diseño del Sistema, debimos tomar las siguientes decisiones so
 \begin{itemize}
 \item Consideramos que los ciudadanos que están en el padrón se encuentran habilitados para votar.
 \item Las elecciones no duran más de un día.
-\item El presidente, el vicepresidente, los fiscales y el técnico consisten en ciudadanos distintos en cada elección.
+\item En una consulta popular, se puede optar por Sí o por No.
 \end{itemize}
-\newpage
+%\newpage
 
 
-\section{Diseño físico}
+%\section{Diseño físico}
 
-\newpage
-\section{Consultas, Stored Procedures y Triggers}
+%\newpage
+%\section{Consultas, Stored Procedures y Triggers}
 
-\newpage
-\section{Tests}
+%\newpage
+%\section{Tests}
 
-\newpage
-\section{Conclusiones}
+%\newpage
+%\section{Conclusiones}
 
 \end{document}
