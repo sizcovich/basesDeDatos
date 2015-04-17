@@ -35,7 +35,7 @@
 
 \begin{document}
 
-\fecha{8 de Mayo de 2015}
+\fecha{17 de Abril de 2015}
 
 \materia{Bases de Datos}
 %\submateria{Trabajo Pr\'actico Nº1}
@@ -73,7 +73,17 @@ Para lograr esto, debimos realizar un \textbf{Modelo de Entidad Relación} y su 
 \newpage
 \section{Modelo de Entidad Relación}
 
-%\input{introduccion.tex}
+\begin{figure}[H] %[h] Aqui [b] para button [t] para top
+\begin{center}
+\includegraphics[width=450pt]{./diagramas/DER01.png}
+\end{center}
+\end{figure}
+
+\begin{figure}[H] %[h] Aqui [b] para button [t] para top
+\begin{center}
+\includegraphics[width=450pt]{./diagramas/DER02.png}
+\end{center}
+\end{figure}
 
 \subsection{Restricciones}
 Presentamos las restricciones del Diagrama en lenguaje natural:
@@ -88,6 +98,7 @@ Presentamos las restricciones del Diagrama en lenguaje natural:
 \item Una camioneta puede estar asignada a un sólo centro.
 \item En una mesa o bien se votan lista, o bien se votan opciones, según el tipo de elección en la que participe.
 \item La camioneta que conduce un ciudadano para una elección debe estar asignada a esa misma elección.
+\item Si un centro está asignado a una elección entonces ese centro tiene al menos una mesa que pertenece a esa elección.
 
 \end{itemize}
 \newpage
