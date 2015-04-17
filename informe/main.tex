@@ -73,13 +73,23 @@ Para lograr esto, debimos realizar un \textbf{Modelo de Entidad Relación} y su 
 \section{Modelo de Entidad Relación}
 
 %\input{introduccion.tex}
+
+\subsection{Restricciones}
+Presentamos las restricciones del Diagrama en lenguaje natural:
+\begin{itemize}
+\item Si un ciudadano preside una mesa, no puede ser ni vicepresidente, ni fiscal, ni técnico para otra mesa en esa elección, como tampoco chofer de ninguna camioneta de esa elección.
+\item Si un ciudadano es vicepresidente de una mesa, no puede ser ni presidente, ni fiscal, ni técnico para otra mesa en esa elección, como tampoco chofer de ninguna camioneta de esa elección.
+\item Si un ciudadano es técnico de una mesa, no puede ser ni vicepresidente, ni fiscal, ni presidente para otra mesa en esa elección, como tampoco chofer de ninguna camioneta de esa elección.
+\item Si un ciudadano es chofer para un centro, no puede ser ni vicepresidente, ni fiscal, ni técnico para alguna mesa en esa elección.
+y para fiscal parecido, solo que puede ser fiscal de muchas mesas, pero no puede presidir, ni vice-presidir, ni ser tecnico, ni chofer
+\item Una camioneta no puede atender a un mesa cuya eleccion no esta en las elecciones en las que participa
+\end{itemize}
 \newpage
 \section{Modelo Relacional}
 
 \newpage
 \section{Supuestos asumidos}
 Para un correcto diseño del Sistema, debimos tomar las siguientes decisiones sobre la situación presentada:
-
 \begin{itemize}
 \item Consideramos que los ciudadanos que están en el padrón se encuentran habilitados para votar.
 \item Las elecciones no duran más de un día.
