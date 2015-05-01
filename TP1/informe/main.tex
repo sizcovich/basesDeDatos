@@ -3,24 +3,12 @@
 \usepackage[spanish]{babel}
 \usepackage{a4wide}
 \usepackage[sinEntregas]{caratula}
-\usepackage[norelsize]{algorithm2e}
-\usepackage{amsmath}
-\usepackage{amssymb}
+\usepackage{ulem}
 \usepackage{marginnote}
 \usepackage{fancyhdr}
 \usepackage{lastpage}
-\usepackage{amsthm}
-\usepackage{verbatim}
-\usepackage{color, colortbl}
 \usepackage{float}
-\definecolor{Gray}{gray}{0.9}
 \usepackage{tikz}
-\usepackage{array}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{subcaption}
-\definecolor{gogetit}{HTML}{6C8B9F}
-\definecolor{greencomments}{rgb}{0,0.5,0}
 
 \pagestyle{fancy}
 \thispagestyle{fancy}
@@ -35,7 +23,7 @@
 
 \begin{document}
 
-\fecha{17 de Abril de 2015}
+\fecha{8 de Mayo de 2015}
 
 \materia{Bases de Datos}
 %\submateria{Trabajo Pr\'actico Nº1}
@@ -75,13 +63,13 @@ Para lograr esto, debimos realizar un \textbf{Modelo de Entidad Relación} y su 
 
 \begin{figure}[H] %[h] Aqui [b] para button [t] para top
 \begin{center}
-\includegraphics[width=450pt]{./diagramas/DER01.png}
+\includegraphics[width=470pt]{./diagramas/DER01.png}
 \end{center}
 \end{figure}
 
 \begin{figure}[H] %[h] Aqui [b] para button [t] para top
 \begin{center}
-\includegraphics[width=450pt]{./diagramas/DER02.png}
+\includegraphics[width=470pt]{./diagramas/DER02.png}
 \end{center}
 \end{figure}
 
@@ -99,11 +87,177 @@ Presentamos las restricciones del Diagrama en lenguaje natural:
 \item En una mesa o bien se votan lista, o bien se votan opciones, según el tipo de elección en la que participe.
 \item La camioneta que conduce un ciudadano para una elección debe estar asignada a esa misma elección.
 \item Si un centro está asignado a una elección entonces ese centro tiene al menos una mesa que pertenece a esa elección.
+\item La hora de votación de un ciudadano debe ser menor o igual a la hora de fin de la elección.
+\item La hora de votación de un ciudadano debe ser mayor o igual a la hora de inicio de una elección.
 
 \end{itemize}
 \newpage
 \section{Modelo Relacional}
 
+\textbf{Elección}(\underline{idEleccion}, fecha, horaDesde, horaHasta, tipo)\\
+PK = CK = \{idEleccion\}\\
+
+\textbf{ConsultaPopular}(\underline{\underline{idEleccion}}, consulta)\\
+PK = CK = FK = \{idEleccion\}\\
+
+\textbf{ElecciónDeCargo}(\underline{\underline{idEleccion}}, cargo)\\
+PK = CK = FK = \{idEleccion\}\\
+
+\textbf{Opcion}(\underline{\underline{idEleccion}}, \underline{nombre})\\
+PK = CK = \{(idEleccion, nombre)\}\\
+FK = \{idEleccion\}\\
+
+\textbf{Centro}(\underline{idCentro}, direccion)\\
+PK = CK = \{idCentro\}\\
+
+\textbf{Mesa}(\underline{\underline{idEleccion}}, \underline{numero}, \dashuline{idCentro}, \dashuline{(tipoDocumentoPresidente, numeroDocumentoPresidente)}, \dashuline{(tipoDocumentoVicepresidente, numeroDocumentoVicepresidente)}, \dashuline{(tipoDocumentoFiscal, numero
+DocumentoFiscal)}, \dashuline{(tipoDocumentoTecnico, numeroDocumentoTecnico)})\\
+PK = CK = \{(idEleccion, numero)\}\\
+FK = \{idEleccion, idCentro, (tipoDocumentoPresidente, numeroDocumentoPresidente), (tipoDocumentoVicepresidente, numeroDocumentoVicepresidente), (tipoDocumentoTecnico, numeroDocumentoTecnico)\}\\
+
+\textbf{Lista}(\underline{\underline{idEleccion}}, \underline{numero}, \dashuline{idPartido})\\
+PK = CK = \{(idEleccion, numero)\}\\
+FK = \{idEleccion, idPartido\}\\
+
+\textbf{Partido}
+(\underline{idPartido},nombre)\\
+PK = CK = \{idEleccion\}\\
+
+\textbf{SeVotaOpcion}
+(\underline{\underline{idEleccion}}, \underline{\underline{numeroMesa}}, \underline{\underline{nombreOpcion}}, cantidadVotos)\\
+PK = CK = \{(idEleccion, numeroMesa, nombreOpcion)\}\\
+FK = \{(idEleccion, numeroMesa), (idEleccion, nombreOpcion)\}\\
+
+\textbf{SeVotaLista}
+(\underline{\underline{idEleccion}}, \underline{\underline{numeroMesa}}, \underline{\underline{numeroLista}}, cantidadVotos)\\
+PK = CK = \{(idEleccion, numeroMesa, numeroLista)\}\\
+FK = \{(idEleccion, numeroMesa), (idEleccion, numeroLista)\}\\
+
+\textbf{Ciudadano}
+(\underline{tipoDocumento}, \underline{numeroDocumento},nombre)\\
+PK = CK = \{(tipoDocumento,numeroDocumento)\}\\
+
+\textbf{Conduce}
+(\underline{\underline{tipoDocumento}, \underline{numeroDocumento}, \underline{idEleccion}}, \dashuline{patente})\\
+PK = \{(tipoDocumento, numeroDocumento, idEleccion)\}\\
+CK = \{(tipoDocumento, numeroDocumento, idEleccion), (idEleccion, patente)\}\\
+FK = \{(tipoDocumento, numeroDocumento), idEleccion, patente\}\\
+
+\textbf{Asignada}
+(\underline{\underline{idEleccion}, \underline{idCentro}}, \dashuline{patente})\\
+PK = \{(idEleccion, idCentro)\}\\
+CK = \{(idEleccion, idCentro), (idEleccion, patente)\}\\
+FK = \{idEleccion, idCentro\}\\
+
+\textbf{Camioneta}
+(\underline{patente})\\
+PK = CK = \{patente\}\\
+
+\textbf{Vota}
+(\underline{\underline{tipoDocumento}},\underline{numeroDocumento},\underline{\underline{idEleccion}, \underline{numeroMesa}}, votó?, hora)\\
+PK = CK = \{(tipoDocumento, numeroDocumento, idEleccion, numeroMesa)\}\\
+FK = \{(tipoDocumento, numeroDocumento), (idEleccion, numeroMesa)\}\\
+
+\textbf{EsFiscalDe}
+(\underline{\underline{tipoDocumento}, \underline{numeroDocumento},
+\underline{idEleccion},
+\underline{numeroMesa}}, \dashuline{idPartido})\\
+PK = \{(tipoDocumento, numeroDocumento, idEleccion, numeroMesa)\}\\
+CK = \{(tipoDocumento, numeroDocumento, idEleccion, numeroMesa),(idEleccion, numeroMesa, idPartido)\}\\
+FK = \{(tipoDocumento, numeroDocumento), (idEleccion, numeroMesa), idPartido\}\\
+
+\textbf{EsCandidatoEn}
+(\underline{\underline{tipoDocumento}, \underline{numeroDocumento},
+\underline{idEleccion},
+\underline{numeroLista}})\\
+PK = CK = \{(tipoDocumento, numeroDocumento, idEleccion, numeroLista)\}\\
+FK = \{(tipoDocumento, numeroDocumento), (idEleccion, numeroLista)\}\\
+
+\subsection{Restricciones Adicionales}
+\begin{itemize}
+\item \textit{ConsultaPopular.idEleccion} debe estar en \textit{Eleccion.idEleccion}
+
+\item \textit{EleccionDeCargo.idEleccion} debe estar en \textit{Eleccion.idEleccion}
+
+\item \textit{Eleccion.idEleccion} puede estar en \textit{EleccionDeCargo.idEleccion} o (exclusivo) \textit{ConsultaPopular.idEleccion} o (exclusivo) no estar en ninguno de los dos anteriores.
+
+\item \textit{Partido.idPartido} puede no estar en \textit{Lista.idPartido}.
+
+\item \textit{Lista.idPartido} debe estar en \textit{Partido.idPartido}.
+
+\item \textit{SeVotaOpcion.nombreOpcion} debe estar en \textit{Opcion.nombre}.
+
+\item \textit{SeVotaOpcion.numeroMesa} debe estar en \textit{Mesa.numero}.
+
+\item \textit{SeVotaOpcion.idEleccion} debe estar en \textit{Opcion.idEleccion}.
+
+\item \textit{Opcion.idEleccion} debe estar en \textit{ConsultaPopular.idEleccion}.
+
+\item \textit{Opcion.nombre} debe estar en \textit{SeVotaOpcion.nombreOpcion}.
+
+\item \textit{Opcion.idEleccion} debe estar en \textit{SeVotaOpcion.idEleccion}.
+
+\item \textit{SeVotaLista.idEleccion} debe estar en \textit{EleccionDeCargo.idEleccion}.
+
+\item \textit{SeVotaLista.numeroMesa} debe estar en \textit{Mesa.numero}.
+
+\item \textit{SeVotaLista.numeroLista} debe estar en \textit{Lista.numero}.
+
+\item \textit{Lista.numero} debe estar en \textit{SeVotaLista.numeroLista}.
+
+\item \textit{Lista.idEleccion} debe estar en \textit{SeVotaLista.idEleccion}.
+
+\item \textit{Mesa.numero} puede no estar en \textit{SeVotaLista.numeroLista}.
+
+\item \textit{Mesa.numero} puede no estar en \textit{SeVotaLista.numeroMesa}.
+
+\item \textit{Mesa.numero} puede no estar en \textit{SeVotaOpcion.numeroMesa}
+
+\item \textit{Mesa.numero} debe estar en \textit{SeVotaOpcion.numeroMesa} o(exclusivo) en \textit{SeVotaLista.numeroMesa}
+
+\item \textit{Lista.idEleccion} debe estar en \textit{EleccionDeCargo.idEleccion}.
+
+\item \textit{ConsultaPopular.idEleccion} debe estar en \textit{Opcion.idEleccion}.
+
+\item \textit{EleccionDeCargo.idEleccion} debe estar en \textit{Lista.idEleccion}.
+
+\item \textit{Asignada.idCentro} debe estar en \textit{Centro.idCentro}.
+
+\item \textit{Asignada.idEleccion} debe estar en \textit{Eleccion.idEleccion}.
+
+\item \textit{Centro.idCentro} debe estar en \textit{asignada.idCentro}.
+
+\item \textit{Eleccion.idEleccion} debe estar en \textit{asignada.idEleccion}.
+
+\item \textit{Asignada.patente} debe estar en \textit{Camioneta.patente}.
+
+\item \textit{Camioneta.patente} debe estar en \textit{Asignada.patente}.
+
+\item \textit{Conduce.patente} debe estar en \textit{Camioneta.patente}.
+
+\item \textit{Camioneta.patente} debe estar en \textit{Conduce.patente}.
+
+\item \textit{Conduce.idEleccion} debe estar en \textit{Eleccion.idEleccion}.
+
+\item \textit{Eleccion.idEleccion} debe estar en \textit{Conduce.idEleccion}.
+
+\item \textit{(Ciudadano.tipoDocumento, Ciudadano.numeroDocumento)} puede no estar en \textit{(Conduce.tipoDocumento, Conduce.numeroDocumento)}.
+
+\item \textit{(Conduce.tipoDocumento, Conduce.numeroDocumento)} debe estar en \textit{(Ciudadano.tipoDocumento, Ciudadano.numeroDocumento)}.
+
+\item \textit{Lista.idPartido} debe estar en \textit{Partido.idPartido}.
+
+\item \textit{Partido.idPartido} puede no estar en \textit{Lista.idPartido}.
+
+\item \textit{EsCandidato.numero} debe estar en \textit{Lista.numero}.
+
+\item \textit{Lista.numero} debe estar en \textit{EsCandidato.numero}.
+
+\item \textit{(EsCandidato.tipoDocumento, EsCandidato.numeroDocumento)} debe estar en \textit{(Ciudadano.tipoDocumento, Ciudadano.numeroDocumento)}.
+
+\item \textit{(Ciudadano.tipoDocumento, Ciudadano.numeroDocumento)} puede no estar en \textit{(EsCandidato.tipoDocumento, EsCandidato.numeroDocumento)}.
+
+\end{itemize}
 \newpage
 \section{Supuestos asumidos}
 Para un correcto diseño del Sistema, debimos tomar las siguientes decisiones sobre la situación presentada:
@@ -111,8 +265,9 @@ Para un correcto diseño del Sistema, debimos tomar las siguientes decisiones so
 \item Consideramos que los ciudadanos que están en el padrón se encuentran habilitados para votar.
 \item Las elecciones no duran más de un día.
 \item En una consulta popular, se puede optar por Sí o por No.
+\item Una lista vale para una sola elección.
 \end{itemize}
-%\newpage
+\newpage
 
 
 %\section{Diseño físico}
