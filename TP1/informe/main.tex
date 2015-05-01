@@ -272,13 +272,71 @@ Para un correcto diseño del Sistema, debimos tomar las siguientes decisiones so
 
 %\section{Diseño físico}
 
-%\newpage
-%\section{Consultas, Stored Procedures y Triggers}
+\newpage
+\section{Consultas, Stored Procedures y Triggers}
 
-%\newpage
-%\section{Tests}
+\textbf{Query:} Poder obtener los ganadores de las elecciones transcurridas en el último año.
 
-%\newpage
-%\section{Conclusiones}
+SELECT e.IdEleccion, NumeroLista, CantidadVotos
+FROM Eleccion e INNER JOIN SeVotaLista s
+ON IdEleccion
+WHERE e.Fecha = 2015 %aca deberian ir las ultimas
+AS Listas2015
+
+SELECT NumeroLista, sum(CantVotos) AS TotalVotos
+FROM Listas2015
+GROUP BY IdEleccion, NumeroLista
+AS SumaVotos
+
+SELECT NumeroLista, max(TotalVotos)
+FROM SumaVotos
+
+\textbf{Query:} Poder consultar las cinco personas que más tarde fueron a votar antes de terminar la votación por cada centro electoral en una elección.
+
+SELECT v.IdEleccion, IdCentro, TipoDocumento, NumeroDocumento, Hora
+FROM Vota INNER JOIN Mesa m
+WHERE v.Voto = True
+AS CentrosPorEleccion
+
+SELECT * FROM CentrosPorEleccion
+ORDER BY IdEleccion, IdCentro, Hora DESC
+AS VotosPorHora
+
+SELECT IdEleccion, IdCentro, TipoDocumento, NumeroDocumento
+FROM (SELECT IdEleccion, IdCentro, TipoDocumento, NumeroDocumento, RANK() OVER(PARTITION BY IdEleccion, IdCentro)
+num FROM CentrosPorEleccion)
+WHERE num <= 5
+
+\textbf{Query:} Poder consultar quiénes fueron los partidos políticos que obtuvieron más del 20\% en las últimas cinco elecciones provinciales a gobernador.
+
+SELECT IdEleccion, (COUNT(*)*0,2) AS Piso
+FROM Mesa m INNER JOIN Vota v
+GROUP BY IdEleccion
+WHERE v.Voto = True
+AS 20PorCientoTotalPorElec
+
+SELECT s.IdEleccion, l.Numero, l.Partido
+FROM SeVotaLista s, Lista l
+WHERE s.IdEleccion = l.IdEleccion AND l.Numero = s.NumeroLista
+AS PartidoDeLista
+
+SELECT v.IdEleccion, p.IdPartido, sum(Votos) AS Total
+FROM PartidoDeLista p INNER JOIN
+(SELECT IdEleccion, NumLista, sum(CantVotos) AS Votos
+FROM SeVotaLista
+GROUP BY IdEleccion, NumLista) v
+GROUP BY v.IdEleccion, p.IdPartido
+AS VotosPorPartido
+
+SELECT v.IdEleccion, v.IdPartido
+FROM VotosPorPartido v INNER JOIN 20PorCientoTotalPorElec t
+WHERE v.Total > t.Piso
+AS PartidosConMasDel20
+
+\newpage
+\section{Tests}
+
+\newpage
+\section{Conclusiones}
 
 \end{document}
