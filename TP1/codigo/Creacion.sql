@@ -304,9 +304,28 @@ IF EXISTS (SELECT 1 FROM Mesa m1, Mesa m2
 			WHERE m1.IdEleccion = m2.IdEleccion AND m1.Numero != m2.Numero AND (
 			(m1.TipoDocumentoPresidente = m2.TipoDocumentoPresidente AND m1.NumeroDocumentoPresidente = m2.NumeroDocumentoPresidente) OR
 			(m1.TipoDocumentoPresidente = m2.TipoDocumentoVicepresidente AND m1.NumeroDocumentoPresidente = m2.NumeroDocumentoVicepresidente) OR
-			(m1.TipoDocumentoPresidente = m2.TipoDocumentoTecnico AND m1.NumeroDocumentoPresidente = m2.NumeroDocumentoTecnico)))	   
+			(m1.TipoDocumentoPresidente = m2.TipoDocumentoTecnico AND m1.NumeroDocumentoPresidente = m2.NumeroDocumentoTecnico)))
+OR EXISTS (SELECT 1 FROM Mesa m INNER JOIN EsFiscalDe e
+			ON m.IdEleccion = e.IdEleccion WHERE m.TipoDocumentoPresidente = e.TipoDocumento AND m.NumeroDocumentoPresidente = e.NumeroDocumento)
+OR EXISTS (SELECT 1 FROM Mesa m INNER JOIN Conduce c
+			ON m.IdEleccion = c.IdEleccion WHERE m.TipoDocumentoPresidente = c.TipoDocumento AND m.NumeroDocumentoPresidente = c.NumeroDocumento)
 BEGIN
-RAISERROR ('El presidente no puede presidir mas de una mesa en la misma eleccion', 10, 1);
+RAISERROR ('El presidente no puede tener otro cargo en una misma eleccion', 10, 1);
+ROLLBACK TRANSACTION;
+RETURN 
+END;
+GO
+
+CREATE TRIGGER [FiscalNoTIeneOtroCargo] ON [dbo].[EsFiscalDe]
+AFTER INSERT, UPDATE AS
+IF EXISTS (SELECT 1 FROM Mesa m INNER JOIN EsFiscalDe e
+			ON m.IdEleccion = e.IdEleccion WHERE (m.TipoDocumentoPresidente = e.TipoDocumento AND m.NumeroDocumentoPresidente = e.NumeroDocumento) OR
+			(m.TipoDocumentoVicepresidente = e.TipoDocumento AND m.NumeroDocumentoVicepresidente = e.NumeroDocumento) OR
+			(m.TipoDocumentoTecnico = e.TipoDocumento AND m.NumeroDocumentoTecnico = e.NumeroDocumento)
+OR EXISTS (SELECT 1 FROM EsFiscalDe e INNER JOIN Conduce c
+			ON e.IdEleccion = c.IdEleccion WHERE e.TipoDocumento = c.TipoDocumento AND e.NumeroDocumento = c.NumeroDocumento))
+BEGIN
+RAISERROR ('El fiscal no puede tener otro cargo en la misma eleccion', 10, 1);
 ROLLBACK TRANSACTION;
 RETURN 
 END;
@@ -318,8 +337,12 @@ IF EXISTS (SELECT 1 FROM Mesa m1, Mesa m2
 			WHERE m1.IdEleccion = m2.IdEleccion AND m1.Numero != m2.Numero AND (			
 			(m1.TipoDocumentoVicepresidente = m2.TipoDocumentoVicepresidente AND m1.NumeroDocumentoVicepresidente = m2.NumeroDocumentoVicepresidente) OR
 			(m1.TipoDocumentoVicepresidente = m2.TipoDocumentoTecnico AND m1.NumeroDocumentoVicepresidente = m2.NumeroDocumentoTecnico)))
+OR EXISTS (SELECT 1 FROM Mesa m INNER JOIN EsFiscalDe e
+			ON m.IdEleccion = e.IdEleccion WHERE m.TipoDocumentoVicepresidente = e.TipoDocumento AND m.NumeroDocumentoVicepresidente = e.NumeroDocumento)
+OR EXISTS (SELECT 1 FROM Mesa m INNER JOIN Conduce c
+			ON m.IdEleccion = c.IdEleccion WHERE m.TipoDocumentoVicepresidente = c.TipoDocumento AND m.NumeroDocumentoVicepresidente = c.NumeroDocumento)
 BEGIN
-RAISERROR ('El presidente no puede presidir mas de una mesa en la misma eleccion', 10, 1);
+RAISERROR ('El vicepresidente no puede tener otro cargo en la misma eleccion', 10, 1);
 ROLLBACK TRANSACTION;
 RETURN 
 END;
@@ -333,7 +356,22 @@ OR EXISTS (SELECT 1 FROM Mesa m INNER JOIN EsFiscalDe e
 			ON m.IdEleccion = e.IdEleccion WHERE (m.TipoDocumentoTecnico = e.TipoDocumento AND m.NumeroDocumentoTecnico = e.NumeroDocumento)
 )
 BEGIN
-RAISERROR ('El presidente no puede presidir mas de una mesa en la misma eleccion', 10, 1);
+RAISERROR ('El tecnico no puede ser conductor de camioneta o fiscal en la misma eleccion', 10, 1);
+ROLLBACK TRANSACTION;
+RETURN 
+END;
+GO
+
+CREATE TRIGGER [ConductorNoPuedeTenerOtroCargo] ON [dbo].[Conduce]
+AFTER INSERT, UPDATE AS
+IF EXISTS (SELECT 1 FROM Mesa m INNER JOIN Conduce c
+			ON m.IdEleccion = c.IdEleccion WHERE (m.TipoDocumentoPresidente = c.TipoDocumento AND m.NumeroDocumentoPresidente = c.NumeroDocumento) OR
+			(m.TipoDocumentoVicepresidente = c.TipoDocumento AND m.NumeroDocumentoVicepresidente = c.NumeroDocumento) OR
+			(m.TipoDocumentoTecnico = c.TipoDocumento AND m.NumeroDocumentoTecnico = c.NumeroDocumento)
+OR EXISTS (SELECT 1 FROM Conduce c INNER JOIN EsFiscalDe e
+			ON c.IdEleccion = e.IdEleccion WHERE (c.TipoDocumento = e.TipoDocumento AND c.NumeroDocumento = e.NumeroDocumento)))
+BEGIN
+RAISERROR ('El Conductor no puede tener otro cargo en la mima eleccion', 10, 1);
 ROLLBACK TRANSACTION;
 RETURN 
 END;

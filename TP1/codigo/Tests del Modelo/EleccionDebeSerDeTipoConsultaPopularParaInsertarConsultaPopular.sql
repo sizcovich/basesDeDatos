@@ -3,3 +3,5 @@ INSERT INTO ConsultaPopular VALUES((SELECT TOP 1 [IdEleccion] FROM [Eleccion] WH
 -- Este no
 INSERT INTO EleccionDeCargo VALUES((SELECT TOP 1 [IdEleccion] FROM [Eleccion] WHERE [Fecha] = '04/05/2015'), 'Jefe de Gobierno de la Ciudad de Buenos Aires')
 
+--borrado de fila insertada
+DELETE FROM ConsultaPopular WHERE IdEleccion = (SELECT TOP 1 [IdEleccion] FROM [Eleccion] WHERE [Fecha] = '03/05/2015')
