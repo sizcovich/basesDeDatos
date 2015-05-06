@@ -1,7 +1,0 @@
---t1: votos por centro por eleccion ordenados por eleccion, centro y hora
-
-(SELECT v.IdEleccion, v.TipoDocumento, v.NumeroDocumento, v.Hora --falta v.IdCentro
-FROM Vota v --INNNER JOIN Mesa m ON v.numeroMesa = m.Numero AND v.IdEleccion = m.IdEleccion
-WHERE v.Voto = 1
-ORDER BY v.IdEleccion, v.Hora DESC) t1 --falta m.IdCentro (orden: segundo)
-

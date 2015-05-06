@@ -3,19 +3,16 @@
 
 --Query para Listas
 
-SELECT t2.IdEleccion, t2.NumeroLista,  max(t2.TotalVotos) AS TotalVotos
+
+SELECT todos.IdEleccion, todos.NumeroLista, todos.TotalVotos FROM 
+VotosPorListaPorEleccionDelAño() todos
+INNER JOIN 
+(SELECT IdEleccion, max(TotalVotos) AS VotosGanador
 FROM
+VotosPorListaPorEleccionDelAño() GROUP BY IdEleccion) ganador
+ON todos.IdEleccion = ganador.IdEleccion AND todos.TotalVotos = ganador.VotosGanador
 
-(SELECT t1.IdEleccion, t1.NumeroLista, sum(t1.CantidadVotos) AS TotalVotos
-FROM
 
-(SELECT e.IdEleccion, NumeroLista, CantidadVotos
-FROM Eleccion e INNER JOIN SeVotaLista s ON E.IdEleccion = S.IdEleccion
-WHERE YEAR(e.Fecha) = YEAR(GETDATE())) t1
-
-GROUP BY t1.IdEleccion, t1.NumeroLista) t2
-
-GROUP BY t2.IdEleccion
 
 
 --Query para Opciones
@@ -36,3 +33,14 @@ WHERE YEAR(e.Fecha) = YEAR(GETDATE())) t1
 GROUP BY t1.IdEleccion, t1.NumeroLista) t2
 
 GROUP BY t2.IdEleccion
+
+
+-- Funciones Auxiliares
+
+CREATE FUNCTION VotosPorListaPorEleccionDelAño()
+RETURNS TABLE AS RETURN(
+	SELECT e.IdEleccion, s.NumeroLista, sum(s.CantidadVotos) AS TotalVotos
+	FROM Eleccion e INNER JOIN SeVotaLista s ON e.IdEleccion = s.IdEleccion
+	WHERE YEAR(e.Fecha) = YEAR(GETDATE())
+	GROUP BY  e.IdEleccion, s.NumeroLista)
+GO

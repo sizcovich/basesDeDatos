@@ -322,9 +322,9 @@ AS PartidoDeLista\\
 
 SELECT v.IdEleccion, p.IdPartido, sum(Votos) AS Total\\
 FROM PartidoDeLista p INNER JOIN\\
-(SELECT IdEleccion, NumLista, sum(CantVotos) AS Votos\\
+(SELECT IdEleccion, NumeroLista, sum(CantVotos) AS Votos\\
 FROM SeVotaLista\\
-GROUP BY IdEleccion, NumLista) v\\
+GROUP BY IdEleccion, NumeroLista) v\\
 GROUP BY v.IdEleccion, p.IdPartido\\
 AS VotosPorPartido\\
 

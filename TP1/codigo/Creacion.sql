@@ -69,10 +69,19 @@ ALTER TABLE [dbo].[Opcion]  WITH CHECK ADD CONSTRAINT [FK_Opcion_ConsultaPopular
 REFERENCES [dbo].[ConsultaPopular] ([IdEleccion])
 GO
 
+-- Centro
+CREATE TABLE [dbo].[Centro](
+	[IdCentro] [uniqueidentifier] NOT NULL,
+	[Direccion] [nvarchar](max) NOT NULL,	
+	CONSTRAINT [PK_Centro] PRIMARY KEY CLUSTERED ([IdCentro])
+)
+GO
+
 -- Mesa
 CREATE TABLE [dbo].[Mesa](
 	[IdEleccion] [uniqueidentifier] NOT NULL,
 	[Numero] [int] NOT NULL,
+	[IdCentro] [uniqueidentifier] NOT NULL,
 	[TipoDocumentoPresidente] [smallint] NOT NULL,
 	[NumeroDocumentoPresidente] [int] NOT NULL,	
 	[TipoDocumentoVicepresidente] [smallint] NOT NULL,
@@ -87,6 +96,9 @@ CREATE TABLE [dbo].[Mesa](
 
 ALTER TABLE [dbo].[Mesa]  WITH CHECK ADD CONSTRAINT [FK_Mesa_Eleccion] FOREIGN KEY([IdEleccion])
 REFERENCES [dbo].[Eleccion] ([IdEleccion])
+
+ALTER TABLE [dbo].[Mesa]  WITH CHECK ADD CONSTRAINT [FK_Mesa_Centro] FOREIGN KEY([IdCentro])
+REFERENCES [dbo].[Centro] ([IdCentro])
 
 ALTER TABLE [dbo].[Mesa] WITH CHECK ADD CONSTRAINT [FK_Mesa_Presidente] FOREIGN KEY([TipoDocumentoPresidente], [NumeroDocumentoPresidente])
 REFERENCES [dbo].[Ciudadano] ([TipoDocumento], [NumeroDocumento])
@@ -130,14 +142,6 @@ REFERENCES [dbo].[Mesa] ([IdEleccion], [Numero])
 
 ALTER TABLE [dbo].[SeVotaOpcion]  WITH CHECK ADD CONSTRAINT [FK_SeVotaOpcion_Opcion] FOREIGN KEY([IdEleccion], [NombreOpcion])
 REFERENCES [dbo].[Opcion] ([IdEleccion], [Nombre])
-GO
-
--- Centro
-CREATE TABLE [dbo].[Centro](
-	[IdCentro] [uniqueidentifier] NOT NULL,
-	[Direccion] [nvarchar](max) NOT NULL,	
-	CONSTRAINT [PK_Centro] PRIMARY KEY CLUSTERED ([IdCentro])
-)
 GO
 
 -- Camioneta
@@ -229,7 +233,7 @@ CREATE TABLE [dbo].[Vota](
 	[Voto] [bit] NOT NULL,
 	[Hora] [time](7) NULL,
 	CONSTRAINT [PK_Vota] PRIMARY KEY CLUSTERED ([IdEleccion], [NumeroMesa], [TipoDocumento], [NumeroDocumento]),
-	CONSTRAINT [Vota_SiVotoTieneHora] CHECK ([Voto] = 0 OR [Hora] IS NOT NULL)
+	CONSTRAINT [Vota_SiVotoTieneHora] CHECK (([Voto] = 0 AND [Hora] IS NULL) AND ([Voto] = 1 AND [Hora] IS NOT NULL))
 )
 
 ALTER TABLE [dbo].[Vota]  WITH CHECK ADD CONSTRAINT [FK_Vota_Mesa] FOREIGN KEY([IdEleccion], [NumeroMesa])
@@ -400,6 +404,20 @@ IF EXISTS (SELECT *
 		   
 BEGIN
 RAISERROR ('La eleccion debe ser de consulta popular', 10, 1);
+ROLLBACK TRANSACTION;
+RETURN 
+END;
+GO
+
+-- Restriccioners sobre Votacion
+
+CREATE TRIGGER [VotaConHoraValida] ON [dbo].[Vota]
+AFTER INSERT, UPDATE AS
+IF EXISTS (SELECT 1 FROM Vota v INNER JOIN Eleccion e ON v.IdEleccion = e.IdEleccion 
+			WHERE v.Hora < e.HoraDesde OR v.Hora > e.HoraHasta)
+		   
+BEGIN
+RAISERROR ('La hora de votacion no es valida', 10, 1);
 ROLLBACK TRANSACTION;
 RETURN 
 END;
