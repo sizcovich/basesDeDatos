@@ -381,34 +381,6 @@ RETURN
 END;
 GO
 
--- Restricciones sobre Lista y Opcion
-CREATE TRIGGER [SeVotaListaSoloParaEleccionesDeCargo] ON [dbo].[SeVotaLista]
-AFTER INSERT, UPDATE AS
-IF EXISTS (SELECT *
-           FROM [dbo].[SeVotaLista] o
-		   WHERE IdEleccion NOT IN (SELECT IdEleccion FROM [dbo].[EleccionDeCargo]))
-		   
-BEGIN
-RAISERROR ('La eleccion debe ser de cargo', 10, 1);
-ROLLBACK TRANSACTION;
-RETURN 
-END;
-GO
-
-
-CREATE TRIGGER [SeVotaOpcionSoloParaEleccionesDeConsultaPopular] ON [dbo].[SeVotaOpcion]
-AFTER INSERT, UPDATE AS
-IF EXISTS (SELECT *
-           FROM [dbo].[SeVotaOpcion] o
-		   WHERE IdEleccion NOT IN (SELECT IdEleccion FROM [dbo].[ConsultaPopular]))
-		   
-BEGIN
-RAISERROR ('La eleccion debe ser de consulta popular', 10, 1);
-ROLLBACK TRANSACTION;
-RETURN 
-END;
-GO
-
 -- Restriccioners sobre Votacion
 
 CREATE TRIGGER [VotaConHoraValida] ON [dbo].[Vota]
