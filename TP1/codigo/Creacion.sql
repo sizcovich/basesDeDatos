@@ -233,7 +233,7 @@ CREATE TABLE [dbo].[Vota](
 	[Voto] [bit] NOT NULL,
 	[Hora] [time](7) NULL,
 	CONSTRAINT [PK_Vota] PRIMARY KEY CLUSTERED ([IdEleccion], [NumeroMesa], [TipoDocumento], [NumeroDocumento]),
-	CONSTRAINT [Vota_SiVotoTieneHora] CHECK (([Voto] = 0 AND [Hora] IS NULL) AND ([Voto] = 1 AND [Hora] IS NOT NULL))
+	CONSTRAINT [Vota_SiVotoTieneHora] CHECK (([Voto] = 0 AND [Hora] IS NULL) OR ([Voto] = 1 AND [Hora] IS NOT NULL))
 )
 
 ALTER TABLE [dbo].[Vota]  WITH CHECK ADD CONSTRAINT [FK_Vota_Mesa] FOREIGN KEY([IdEleccion], [NumeroMesa])
