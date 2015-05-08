@@ -264,83 +264,148 @@ Para un correcto diseño del Sistema, debimos tomar las siguientes decisiones so
 \begin{itemize}
 \item Consideramos que los ciudadanos que están en el padrón se encuentran habilitados para votar.
 \item Las elecciones no duran más de un día.
-\item En una consulta popular, se puede optar por Sí o por No.
+\item En una consulta popular, las únicas opciones para votar son Sí o No.
 \item Una lista vale para una sola elección.
 \end{itemize}
 \newpage
-
-
-%\section{Diseño físico}
 
 \newpage
 \section{Funcionalidades a implementar}
 
 \textbf{Query:} \textit{Poder obtener los ganadores de las elecciones transcurridas en el último año.}\\
 
-SELECT e.IdEleccion, NumeroLista, CantidadVotos\\
-FROM Eleccion e INNER JOIN SeVotaLista s\\
-ON IdEleccion\\
-WHERE e.Fecha = 2015\\ %aca deberian ir las ultimas
-AS Listas2015\\
+\textit{Stored Procedures:}
 
-SELECT NumeroLista, sum(CantVotos) AS TotalVotos\\
-FROM Listas2015\\
-GROUP BY IdEleccion, NumeroLista\\
-AS SumaVotos\\
+\begin{verbatim}
+CREATE PROCEDURE GanadoresCargoUltimoAño
+AS 
+	SELECT todos.IdEleccion, todos.NumeroLista, todos.TotalVotos 
+	FROM VotosPorListaPorEleccionDelAño() todos
+	INNER JOIN
+	(SELECT IdEleccion, max(TotalVotos) AS VotosGanador
+	FROM VotosPorListaPorEleccionDelAño() 
+	GROUP BY IdEleccion) ganador
+	ON todos.IdEleccion = ganador.IdEleccion AND todos.TotalVotos = ganador.VotosGanador;
+GO
 
-SELECT NumeroLista, max(TotalVotos)\\
-FROM SumaVotos\\
+CREATE PROCEDURE GanadoresOpcionUltimoAño
+AS 
+	SELECT todos.IdEleccion, todos.NombreOpcion, todos.TotalVotos 
+	FROM VotosPorOpcionPorEleccionDelAño() todos
+	INNER JOIN 
+	(SELECT IdEleccion, max(TotalVotos) AS VotosGanador
+	FROM VotosPorOpcionPorEleccionDelAño()
+	GROUP BY IdEleccion) ganador
+	ON todos.IdEleccion = ganador.IdEleccion AND todos.TotalVotos = ganador.VotosGanador;
+GO
+\end{verbatim}
+
+\textit{Funciones:}
+
+\begin{verbatim}
+CREATE FUNCTION VotosPorOpcionPorEleccionDelAño()
+RETURNS TABLE AS RETURN(
+	SELECT v.IdEleccion, v.NombreOpcion, v.TotalVotos
+	FROM VotosPorOpcionPorEleccion() v
+	INNER JOIN Eleccion e ON e.IdEleccion = v.IdEleccion
+	WHERE YEAR(e.Fecha) = YEAR(GETDATE()))
+GO
+
+CREATE FUNCTION VotosPorOpcionPorEleccion()
+RETURNS TABLE AS RETURN(
+	SELECT e.IdEleccion, s.NombreOpcion, sum(s.CantidadVotos) AS TotalVotos
+	FROM Eleccion e 
+	INNER JOIN SeVotaOpcion s ON e.IdEleccion = s.IdEleccion
+	GROUP BY e.IdEleccion, s.NombreOpcion)
+GO
+
+
+CREATE FUNCTION VotosPorListaPorEleccionDelAño()
+RETURNS TABLE AS RETURN(
+	SELECT v.IdEleccion, v.NumeroLista, v.TotalVotos
+	FROM VotosPorListaPorEleccion() v
+	INNER JOIN Eleccion e ON e.IdEleccion = v.IdEleccion
+	WHERE YEAR(e.Fecha) = YEAR(GETDATE()))
+GO
+
+CREATE FUNCTION VotosPorListaPorEleccion()
+RETURNS TABLE AS RETURN(
+	SELECT e.IdEleccion, s.NumeroLista, sum(s.CantidadVotos) AS TotalVotos
+	FROM Eleccion e 
+	INNER JOIN SeVotaLista s ON e.IdEleccion = s.IdEleccion	
+	GROUP BY e.IdEleccion, s.NumeroLista)
+GO
+\end{verbatim}
 
 \textbf{Query:} \textit{Poder consultar las cinco personas que más tarde fueron a votar antes de terminar la votación por cada centro electoral en una elección.}\\
 
-SELECT v.IdEleccion, IdCentro, TipoDocumento, NumeroDocumento, Hora\\
-FROM Vota INNER JOIN Mesa m\\
-WHERE v.Voto = True\\
-AS CentrosPorEleccion\\
-
-SELECT * FROM CentrosPorEleccion\\
-ORDER BY IdEleccion, IdCentro, Hora DESC\\
-AS VotosPorHora\\
-
-SELECT IdEleccion, IdCentro, TipoDocumento, NumeroDocumento\\
-FROM (SELECT IdEleccion, IdCentro, TipoDocumento, NumeroDocumento, RANK() OVER(PARTITION BY IdEleccion, IdCentro)\\
-num FROM CentrosPorEleccion)\\
-WHERE num $\leq$ 5\\
+\textit{Stored Procedures:}
+\begin{verbatim}
+CREATE PROCEDURE UltimosCincoEnVotarPorCentro
+AS 
+	SELECT IdEleccion, IdCentro, TipoDocumento, NumeroDocumento, Hora
+	FROM 
+	(SELECT v.IdEleccion, m.IdCentro, v.TipoDocumento, v.NumeroDocumento, v.Hora, RANK() 
+	OVER(PARTITION BY m.IdEleccion, m.IdCentro ORDER BY m.IdEleccion, m.IdCentro, v.Hora 
+	DESC) as Orden
+	FROM Vota v INNER JOIN Mesa m ON v.numeroMesa = m.Numero AND v.IdEleccion = m.IdEleccion
+	WHERE v.Voto = 1
+	) t1
+	WHERE Orden <= 5;
+GO
+\end{verbatim}
 
 \textbf{Query:} \textit{Poder consultar quiénes fueron los partidos políticos que obtuvieron más del 20\% en las últimas cinco elecciones provinciales a gobernador.}\\
 
-SELECT IdEleccion, (COUNT(*)*0,2) AS Piso\\
-FROM Mesa m INNER JOIN Vota v\\
-GROUP BY IdEleccion\\
-WHERE v.Voto = True\\
-AS 20PorCientoTotalPorElec\\
+\textit{Stored Procedures:}
+\begin{verbatim}
+CREATE PROCEDURE PartidosConMasDel20EnLasUltimas5ParaGobernador
+AS 
+	SELECT TOP 5 e.IdEleccion, p.Nombre, v.TotalVotos
+	FROM 
+	(SELECT TOP 5 e.IdEleccion, e.Tipo, e.Fecha
+	 FROM EleccionDeCargo ec
+	 INNER JOIN Eleccion e ON e.IdEleccion = ec.IdEleccion
+	 WHERE ec.Cargo = 'Gobernador'
+	 ORDER BY Fecha DESC) e
+	INNER JOIN VotosPorPartidoPorEleccion() v ON v.IdEleccion = e.IdEleccion
+	INNER JOIN VeintePorCientoDeVotosPorEleccion() vp ON vp.IdEleccion = e.IdEleccion
+	INNER JOIN Partido p ON p.IdPartido = v.IdPartido
+	WHERE  v.TotalVotos > vp.VeintePorCientoDeVotos;
+GO
+\end{verbatim}
 
-SELECT s.IdEleccion, l.Numero, l.Partido\\
-FROM SeVotaLista s, Lista l\\
-WHERE s.IdEleccion = l.IdEleccion AND l.Numero = s.NumeroLista\\
-AS PartidoDeLista\\
+\textit{Funciones:}
 
-SELECT v.IdEleccion, p.IdPartido, sum(Votos) AS Total\\
-FROM PartidoDeLista p INNER JOIN\\
-(SELECT IdEleccion, NumeroLista, sum(CantVotos) AS Votos\\
-FROM SeVotaLista\\
-GROUP BY IdEleccion, NumeroLista) v\\
-GROUP BY v.IdEleccion, p.IdPartido\\
-AS VotosPorPartido\\
+\begin{verbatim}
+CREATE FUNCTION VotosPorPartidoPorEleccion()
+RETURNS TABLE AS RETURN(
+	SELECT v.IdEleccion, l.IdPartido, sum(v.TotalVotos) AS TotalVotos
+	FROM VotosPorListaPorEleccion() v
+	INNER JOIN Lista l ON l.IdEleccion = v.IdEleccion AND l.Numero = v.NumeroLista
+	GROUP BY v.IdEleccion, l.IdPartido)
+GO
 
-SELECT v.IdEleccion, v.IdPartido\\
-FROM VotosPorPartido v INNER JOIN 20PorCientoTotalPorElec t\\
-WHERE v.Total $>$ t.Piso\\
-AS PartidosConMasDel20\\
+CREATE FUNCTION VotosPorListaPorEleccion()
+RETURNS TABLE AS RETURN(
+	SELECT e.IdEleccion, s.NumeroLista, sum(s.CantidadVotos) AS TotalVotos
+	FROM Eleccion e 
+	INNER JOIN SeVotaLista s ON e.IdEleccion = s.IdEleccion	
+	GROUP BY e.IdEleccion, s.NumeroLista)
+GO
 
+CREATE FUNCTION VeintePorCientoDeVotosPorEleccion()
+RETURNS TABLE AS RETURN(
+	SELECT m.IdEleccion, (COUNT(*)*0.2) AS VeintePorCientoDeVotos
+	FROM Mesa m 
+	INNER JOIN Vota v ON m.IdEleccion = v.IdEleccion AND m.Numero = v.NumeroMesa
+	WHERE v.Voto = 1
+	GROUP BY m.IdEleccion
+)
+GO
+\end{verbatim}
 \newpage
-\section{Testeo del modelo}
-Para testear el modelo implementado, decidimos analizar los casos bordes vulnerables a posibles errores.
-
-
-
-\newpage
-\section{Conclusiones}
+\section{Conclusión}
 
 El trabajo práctico consistió en diseñar y desarrollar una posible solución a un problema del mundo real. El mismo se basó en un sistema de voto electrónico capaz de abarcar todo el territorio de la nación y de soportar elecciones de cualquier cargo público.\\
 En primer lugar, para lograr un diseño adecuado, debimos realizar un Modelo de Entidad Relación y su Modelo Relacional derivado.
