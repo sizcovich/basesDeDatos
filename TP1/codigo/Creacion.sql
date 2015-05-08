@@ -233,7 +233,7 @@ CREATE TABLE [dbo].[Vota](
 	[Voto] [bit] NOT NULL,
 	[Hora] [time](7) NULL,
 	CONSTRAINT [PK_Vota] PRIMARY KEY CLUSTERED ([IdEleccion], [NumeroMesa], [TipoDocumento], [NumeroDocumento]),
-	CONSTRAINT [Vota_SiVotoTieneHora] CHECK (([Voto] = 0 AND [Hora] IS NULL) OR ([Voto] = 1 AND [Hora] IS NOT NULL))
+	CONSTRAINT [Vota_SiUnCiudadanoVotoTieneHoraSinoNo] CHECK (([Voto] = 0 AND [Hora] IS NULL) OR ([Voto] = 1 AND [Hora] IS NOT NULL))
 )
 
 ALTER TABLE [dbo].[Vota]  WITH CHECK ADD CONSTRAINT [FK_Vota_Mesa] FOREIGN KEY([IdEleccion], [NumeroMesa])
@@ -314,7 +314,7 @@ OR EXISTS (SELECT 1 FROM Mesa m INNER JOIN EsFiscalDe e
 OR EXISTS (SELECT 1 FROM Mesa m INNER JOIN Conduce c
 			ON m.IdEleccion = c.IdEleccion WHERE m.TipoDocumentoPresidente = c.TipoDocumento AND m.NumeroDocumentoPresidente = c.NumeroDocumento)
 BEGIN
-RAISERROR ('El presidente no puede tener otro cargo en una misma eleccion', 10, 1);
+RAISERROR ('Un Presidente no puede tener otro cargo en una misma eleccion', 10, 1);
 ROLLBACK TRANSACTION;
 RETURN 
 END;
@@ -329,7 +329,7 @@ IF EXISTS (SELECT 1 FROM Mesa m INNER JOIN EsFiscalDe e
 OR EXISTS (SELECT 1 FROM EsFiscalDe e INNER JOIN Conduce c
 			ON e.IdEleccion = c.IdEleccion WHERE e.TipoDocumento = c.TipoDocumento AND e.NumeroDocumento = c.NumeroDocumento))
 BEGIN
-RAISERROR ('El fiscal no puede tener otro cargo en la misma eleccion', 10, 1);
+RAISERROR ('Un Fiscal no puede tener otro cargo en la misma eleccion', 10, 1);
 ROLLBACK TRANSACTION;
 RETURN 
 END;
@@ -346,7 +346,7 @@ OR EXISTS (SELECT 1 FROM Mesa m INNER JOIN EsFiscalDe e
 OR EXISTS (SELECT 1 FROM Mesa m INNER JOIN Conduce c
 			ON m.IdEleccion = c.IdEleccion WHERE m.TipoDocumentoVicepresidente = c.TipoDocumento AND m.NumeroDocumentoVicepresidente = c.NumeroDocumento)
 BEGIN
-RAISERROR ('El vicepresidente no puede tener otro cargo en la misma eleccion', 10, 1);
+RAISERROR ('Un Vicepresidente no puede tener otro cargo en la misma eleccion', 10, 1);
 ROLLBACK TRANSACTION;
 RETURN 
 END;
@@ -360,7 +360,7 @@ OR EXISTS (SELECT 1 FROM Mesa m INNER JOIN EsFiscalDe e
 			ON m.IdEleccion = e.IdEleccion WHERE (m.TipoDocumentoTecnico = e.TipoDocumento AND m.NumeroDocumentoTecnico = e.NumeroDocumento)
 )
 BEGIN
-RAISERROR ('El tecnico no puede ser conductor de camioneta o fiscal en la misma eleccion', 10, 1);
+RAISERROR ('Un Tecnico no puede ser Conductor de camioneta o Fiscal en la misma eleccion', 10, 1);
 ROLLBACK TRANSACTION;
 RETURN 
 END;
@@ -375,7 +375,7 @@ IF EXISTS (SELECT 1 FROM Mesa m INNER JOIN Conduce c
 OR EXISTS (SELECT 1 FROM Conduce c INNER JOIN EsFiscalDe e
 			ON c.IdEleccion = e.IdEleccion WHERE (c.TipoDocumento = e.TipoDocumento AND c.NumeroDocumento = e.NumeroDocumento)))
 BEGIN
-RAISERROR ('El Conductor no puede tener otro cargo en la mima eleccion', 10, 1);
+RAISERROR ('Un Conductor de camioneta no puede tener otro cargo en la mima eleccion', 10, 1);
 ROLLBACK TRANSACTION;
 RETURN 
 END;
