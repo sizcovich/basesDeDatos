@@ -69,6 +69,10 @@ La semántica web consiste en una Semántica Extendida dotada de mayor significa
 En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas RDF sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas RDF en consultas SQL para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS). Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema que esta solución presenta es de rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMSs no son capaces de optimizar eficientemente estas consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación.
 
 \newpage
+\section{RDF}
+Un set de datos RDF consiste en datos explícitos e implícitos presentes en la base de datos, dados por restricciones semánticas que deben cumplir. Dichos datos son obtenidos por un proceso que considera las restricciones para inferir todas las posibles consecuencias de la base de datos existente.
+
+\newpage
 \section{Mecanismos de conversión de la Web}
 Para obtener una adecuada definición de los datos, la Web Semántica utiliza esencialmente RDF, SPARQL, y OWL, mecanismos que ayudan a convertir la Web en una infraestructura global en la que es posible compartir, y reutilizar datos y documentos entre diferentes tipos de usuarios.
 
@@ -83,7 +87,7 @@ Para obtener una adecuada definición de los datos, la Web Semántica utiliza es
 \section{Referencias}
 
 \begin{itemize}
-\item http://www.w3c.es/Divulgacion/GuiasBreves/WebSemantica
+\item The World Wide Web Consortium (W3C). http://www.w3c.es/Divulgacion/GuiasBreves/WebSemantica
 \item http://jplu.developpez.com/tutoriels/web-semantique/introduction/
 \end{itemize}
 
