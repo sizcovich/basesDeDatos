@@ -88,7 +88,7 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[Presentación del TP2]{Optimización de consultas RDF reformuladas} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[Presentación del TP2]{Semántica Web} % The short title appears at the bottom of every slide, the full title is only on the title page
 
 \author{Federico Allocati, Sabrina Izcovich, Santiago Pernigotti, Germán Romano} % Your name
 \institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -115,69 +115,101 @@ Departamento de Computación\\ % Your institution for the title page
 %----------------------------------------------------------------------------------------
 
 %------------------------------------------------
-\section{Introducción} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+\section{Introducción} 
 %------------------------------------------------
 \begin{frame}
-%\frametitle{¿Dónde Estamos?}
-%\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+\frametitle{Material Analizado}
+\begin{itemize}
+\item \textbf{Optimizing Reformulated RDF Queries}, Damián A. Bursztyn, 2013
 
-%\column{.45\textwidth} % Left column and width
-%\begin{itemize}
-%\item Ya repasamos elementos de álgebra lineal.
-%\item Refrescamos las nociones de matriz, inversibilidad y determinante.
-%\item ¡Ahora veamos un ejercicio!
-%\end{itemize}
-
-%\column{.5\textwidth} % Right column and width
-%\includegraphics[width=200pt]{checklist.jpg}
-%\end{columns}
-\end{frame}
-
-
-%------------------------------------------------
-\section{Repaso} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
-
-%------------------------------------------------
-
-\begin{frame}
-%\frametitle{Pero antes}
-%\begin{block}{Matriz inversible}
-%Sea $A \in \mathbb{R}^{nxn}$, se dice que A es inversible si existe una matriz $A^{-1} \in \mathbb{R}^{nxn}$ tal que
-%$$AA^{-1} = I\ \land\ A^{-1}A = I$$
-%\end{block}
-
+\end{itemize}
 \end{frame}
 
 %------------------------------------------------
-
-
+\section{Contextualizando...} 
 %------------------------------------------------
-%\section{¡Ejercicio!}
+\subsection{Web Semántica}
+\begin{frame}
+\frametitle{¿Qué es la Web Semántica?} 
+\begin{block}{Web Semántica}
+\begin{itemize}
+\item<1-> Web Extendida enfocada en el significado de las búsquedas.
+\item<2-> Se procesa la información en términos de su semántica a través de operaciones bien definidas.
+\item<3-> El software es capaz de procesar el contenido, razonar con este, combinarlo y realizar deducciones lógicas para resolver problemas cotidianos automáticamente.
+\item<4-> Utiliza una infraestructura común mediante la cual es posible compartir, procesar y transferir información de forma sencilla.
+\item<5-> Otorga una solución a problemas habituales en la búsqueda de información ocasionados por la sobrecarga de información y heterogeneidad de fuentes de información.
+\end{itemize}
+\end{block}
+\end{frame}
 %------------------------------------------------
-
+\begin{frame}
+\frametitle{Ejemplo} 
+\begin{figure}[H] %[h] Aqui [b] para button [t] para top
+\begin{center}
+\includegraphics[width=340pt]{imgs/resultadoNormal}
+\caption{Resultados obtenidos con un buscador normal.}
+\end{center}
+\end{figure}
+\end{frame}
+%------------------------------------------------
+\begin{frame}
+\frametitle{Ejemplo} 
+\begin{figure}[H] %[h] Aqui [b] para button [t] para top
+\begin{center}
+\includegraphics[width=340pt]{imgs/resultadoSemantico}
+\caption{Resultados obtenidos con un buscador semántico.}
+\end{center}
+\end{figure}
+\end{frame}
+%------------------------------------------------
+\subsection{RDF}
 \begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-%\frametitle{Y ahora...}
-%\begin{block}{Ejercicio}
-%Una matriz $A \in \mathbb{R}^{nxn}$ se dice nilpotente si $A^{k}$ = 0 para algún $k \in \mathbb{N}$. Probar que si $A$ es nilpotente $\implies$ $A$ no es inversible.
-	
-%\begin{enumerate}
-%\item $A$ no es inversible.
-%\item $I - A$ es inversible.
-%\end{enumerate}
-%\end{block}
+\frametitle{¿Qué es RDF?}
+\begin{block}{Resource Description Framework}
+\begin{itemize}
+\item<1-> Modelo estándar para intercambio de datos en la Web.
+\item<2-> En particular, es el formato de datos de la web semántica.
+\item<3-> Tiene características que facilitan la fusión de datos a pesar de que sus esquemas de organización difieran.
+\item<4-> Extiende la unión de estructuras en la Web nombrando las relaciones entre cosas.
+\item<5-> La estructura de \textit{linking} forma un grafo dirigido y etiquetado donde los ejes representan la relación entre dos fuentes (los nodos).
+\item<5-> Su utilización permite estructurar los datos a ser fusionados, expuestos y compartidos a través de diferentes aplicaciones.
+\end{itemize}
+\end{block}
 \end{frame}
 
 %------------------------------------------------
-% \begin{frame}
-% \Huge{\centerline{¿Y eso cómo se prueba?}}
-% \begin{figure}[H] %[h] Aqui [b] para button [t] para top
-% \begin{center}
-% \includegraphics[width=150pt]{surprise.png}
-% \end{center}
-% \end{figure}
-% \end{frame}
+\begin{frame}[fragile]
+\frametitle{Ejemplo}
+\textit{``Javier Perez es el autor del documento cuya URL es http://www.dc.uba.ar/examen.pdf. Su mail es jperez@dc.uba.ar y su teléfono +54(11)4563-4567.''}
+\begin{verbatim}
+<?namespace href="http://dc.uba.ar/info-bibliografia" as="bib"?> 
+<RDF:serialization> 
+  <RDF:assertions href="http://dc.uba.ar/examen.pdf"> 
+    <bib:autor> 
+      <RDF:resource> 
+        <bib:nombre>Javier Perez</bib:nombre> 
+        <bib:mail>jperez@dc.uba.ar</bib:mail> 
+        <bib:telefono>+54(11)4563-4567</bib:telefono> 
+      </RDF:resource> 
+    </bib:autor> 
+  </RDF:assertions> 
+</RDF:serialization>
 
+\end{verbatim}
+\end{frame}
 
+%------------------------------------------------
+\begin{frame}[fragile]
+\frametitle{Ejemplo} 
+\begin{center}
+\begin{figure}[H] %[h] Aqui [b] para button [t] para top
+\includegraphics[width=300pt]{imgs/rdfModel}
+\caption{Modelo RDF.}
+\end{figure}
+Los nodos son las elipses, los ejes la relación y los rectángulos son strings.
+\end{center}
+\end{frame}
+%------------------------------------------------
 
 \begin{frame}
 % \frametitle{Ejercicio}
@@ -242,17 +274,6 @@ Departamento de Computación\\ % Your institution for the title page
 
 %\end{exampleblock}
 %\end{frame}
-
-%------------------------------------------------
-
-
-%------------------------------------------------
-
-
-%------------------------------------------------
-
-%------------------------------------------------
-
 %------------------------------------------------
 
 \begin{frame}
