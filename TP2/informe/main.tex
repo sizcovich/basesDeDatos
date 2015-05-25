@@ -64,6 +64,9 @@ La semántica web consiste en una Semántica Extendida dotada de mayor significa
 \caption{Resultados obtenidos con un buscador semántico.}
 \end{center}
 \end{figure}
+\newpage
+\section{Problemas de la Web Semántica}
+En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas RDF sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas RDF en consultas SQL para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS). Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema que esta solución presenta es de rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMSs no son capaces de optimizar eficientemente estas consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación.
 
 \newpage
 \section{Mecanismos de conversión de la Web}
@@ -73,6 +76,15 @@ Para obtener una adecuada definición de los datos, la Web Semántica utiliza es
 \item \textbf{RDF} proporciona información descriptiva simple sobre los recursos que se encuentran en la Web y que se utiliza, por ejemplo, en catálogos de libros, directorios, colecciones personales de música, fotos, eventos, etc.
 \item \textbf{SPARQL} es lenguaje de consulta sobre RDF, que permite hacer búsquedas sobre los recursos de la Web Semántica utilizando distintas fuentes datos.
 \item \textbf{OWL} es un mecanismo para desarrollar temas o vocabularios específicos en los que asociar esos recursos. Lo que hace OWL es proporcionar un lenguaje para definir ontologías estructuradas que pueden ser utilizadas a través de diferentes sistemas. Las ontologías, que se encargan de definir los términos utilizados para describir y representar un área de conocimiento, son utilizadas por los usuarios, las bases de datos y las aplicaciones que necesitan compartir información específica, es decir, en un campo determinado como puede ser el de las finanzas, medicina, deporte, etc. Las ontologías incluyen definiciones de conceptos básicos en un campo determinado y la relación entre ellos.
+\end{itemize}
+
+\newpage
+
+\section{Referencias}
+
+\begin{itemize}
+\item http://www.w3c.es/Divulgacion/GuiasBreves/WebSemantica
+\item http://jplu.developpez.com/tutoriels/web-semantique/introduction/
 \end{itemize}
 
 \end{document}
