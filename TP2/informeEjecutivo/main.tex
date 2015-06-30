@@ -42,14 +42,14 @@
 
 \section{Introducción}
 
-El siguiente informe consiste en un análisis enfocado en la \textit{Web Semántica}. Para la realización del mismo, basamos nuestra investigación en la tesis\footnote{http://dc.uba.ar/inv/tesis/licenciatura/2013/bursztyn.pdf} presentada por \textit{Damián A. Bursztyn} en el año 2013 sobre \textbf{Optimización de consultas RDF reformuladas} y en el artículo \textbf{Introduction to the Special Issue on Semantic Web Data Management} escrito por \textit{Roberto De Virgilio} en 2011.
+El siguiente trabajo consiste en una explicación ejecutiva de la \textit{Web Semántica}. Para la realización del mismo, analizamos la tesis\footnote{http://dc.uba.ar/inv/tesis/licenciatura/2013/bursztyn.pdf} presentada por \textit{Damián A. Bursztyn} en el año 2013 sobre \textbf{Optimización de consultas RDF reformuladas} y el artículo \textbf{Introduction to the Special Issue on Semantic Web Data Management} escrito por \textit{Roberto De Virgilio} en 2011.
 
 En lo que sigue, explicaremos los conceptos de Web Semántica y sus problemáticas, de su formato de representación \textit{RDF} y de los mecanismos que ayudan a convertir la Web en una infraestructura global en la que es posible compartir, y reutilizar datos y documentos entre diferentes tipos de usuarios.
 
 \section{Web Semántica}
-La Web Semántica consiste en una Web Extendida dotada de mayor significado gracias a los metadatos que acompañan a los datos que circulan. Su utilidad principal es encontrar soluciones a problemas habituales en la búsqueda de información gracias a la utilización de una infraestructura común mediante la que se procesa y transfiere información de una manera sencilla. Esta Web extendida y basada en el \textit{significado}, se apoya en lenguajes universales que resuelven los problemas ocasionados por una Web carente de semántica en la que, en ocasiones, el acceso a la información se convierte en una tarea difícil.
+La Web Semántica consiste en una Web Extendida dotada de mayor significado gracias a los metadatos que acompañan a los datos que circulan. Su utilidad principal es encontrar soluciones a problemas habituales en la búsqueda de información gracias a la utilización de una infraestructura común mediante la que se procesa y transfiere información de una manera sencilla. Esta Web Extendida y basada en el \textit{significado}, se apoya en lenguajes universales que resuelven los problemas ocasionados por una Web carente de semántica en la que, en ocasiones, el acceso a la información se convierte en una tarea difícil.
 
-En lo que sigue, veamos un ejemplo de un buscador en la Web Semántica:
+En lo que sigue, vemos la diferencia entre la Web Semántica y la Web clásica a través de un buscador:
 
 \begin{figure}[H] %[h] Aqui [b] para button [t] para top
 \begin{center}
@@ -64,20 +64,20 @@ En lo que sigue, veamos un ejemplo de un buscador en la Web Semántica:
 \end{center}
 \end{figure}
 
-\section{RDF}
-Es el principal formato de los datos de la Web Semántica. Un set de datos \textit{RDF} consiste en datos explícitos e implícitos presentes en la base de datos, dados por restricciones semánticas. Éstos son obtenidos por un proceso que considera todas las restricciones para inferir las posibles consecuencias de la base de datos existente.
+\section{Resource Description Framework}
+Es el principal formato de los datos de la Web Semántica. Un set de datos \textit{Resource Description Framework} (o \textit{RDF}) consiste en datos explícitos e implícitos presentes en la base de datos, dados por restricciones semánticas. Éstos son obtenidos por un proceso que considera todas las restricciones para inferir las posibles consecuencias de la base de datos existente.
 
 Principalmente, proporcionan información descriptiva simple sobre los recursos que se encuentran en la Web y que se utiliza, por ejemplo, en catálogos de libros, directorios, colecciones personales de música, fotos, eventos, etc.
 
 \section{Problemas de la Web Semántica}
-En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas en \textit{RDF} en consultas \textit{SQL} para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS). Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema de esto es que no se logra un buen rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMs no son capaces de optimizar eficientemente las consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación.
+En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas \textit{RDF} en consultas \textit{SQL} para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS). Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema de esto es que no se logra un buen rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMs no son capaces de optimizar eficientemente las consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación.
 
-%%\section{RDF y RDBMS}
-%%Las consultas RDF se pueden transformar en consultas de bases de datos relacionales sin mucha dificultad. A partir de la consulta transformada es posible utilizar cualquiera de las dos métodos de vinculación de RDF para resolverla, saturación o reformulación.
-%%\\\\
-%%\textbf{Saturación:} Transforma los datos implícitos en explícitos, ampliando asi la base de datos. 
-%%\\\\
-%%\textbf{Reformulación:} Se reformula la consulta basandose en las restricciones conocidas antes de evaluarla. La ventaja principal es que se aplica por consulta y no a toda la base de datos.
+\section{RDF pasada a bases de datos tradicionales}
+Las consultas RDF se pueden transformar en consultas de bases de datos relacionales sin mucha dificultad. A partir de la consulta transformada, es posible utilizar cualquiera de los dos métodos de vinculación de RDF para resolverla: saturación o reformulación.
+\\\\
+\textbf{Saturación:} Transforma los datos implícitos en explícitos, ampliando así la base de datos. 
+\\\\
+\textbf{Reformulación:} Se reformula la consulta basándose en las restricciones conocidas antes de evaluarla. La ventaja principal es que se aplica por consulta y no a toda la base de datos.
 
 \section{Reformulación}
 
