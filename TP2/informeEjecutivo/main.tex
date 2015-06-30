@@ -79,21 +79,6 @@ En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la
 %%\\\\
 %%\textbf{Reformulación:} Se reformula la consulta basandose en las restricciones conocidas antes de evaluarla. La ventaja principal es que se aplica por consulta y no a toda la base de datos.
 
-\section{Mecanismos de conversión de la Web}
-Para obtener una adecuada definición de los datos, la Web Semántica utiliza esencialmente OWL, SPARQL, BGP y RDF. Estos mecanismos ayudan a convertir la Web en una infraestructura global en la que es posible compartir, y reutilizar datos y documentos entre diferentes tipos de usuarios.
-\begin{itemize}
-\item \textbf{SPARQL} es lenguaje de consulta sobre RDF, que permite hacer búsquedas sobre los recursos de la Web Semántica utilizando distintas fuentes datos.
-\item \textbf{BGP} es el Patrón de grafo básico.
-\begin{itemize}
-\item Las consultas BGP son un subconjunto del lenguaje de consultas SPARQL W3C para RDF. 
-\item El mismo se corresponde con la clase de familias de consultas conjuntivas de las bases de datos relacionales. 
-\item Conforman las consultas SPARQL más utilizadas en el mundo real.
-\item Están compuestas por un conjunto de variables distinguidas, la cabeza y el conjunto de patrones de tripla (los BGP).
-\end{itemize}
-
-\item \textbf{OWL} es un mecanismo para desarrollar temas o vocabularios específicos en los que asociar esos recursos. Lo que hace OWL es proporcionar un lenguaje para definir ontologías estructuradas que pueden ser utilizadas a través de diferentes sistemas. Las ontologías, que se encargan de definir los términos utilizados para describir y representar un área de conocimiento, son utilizadas por los usuarios, las bases de datos y las aplicaciones que necesitan compartir información específica, es decir, en un campo determinado como puede ser el de las finanzas, medicina, deporte, etc. Las ontologías incluyen definiciones de conceptos básicos en un campo determinado y la relación entre ellos.
-\end{itemize}
-
 \section{Reformulación}
 
 Como mencionamos anteriormente, las bases de datos para Web Semántica presentan datos implícitos que las RDBMs no tienen en cuenta a la hora de resolver las consultas. Para esto, se aplican técnicas de \textbf{Reformulación} a la consulta entrante para luego traducirla a una consulta SQL que, al ser evaluada por el Sistema de gestión de bases de datos relacionales, devuelve la respuesta completa. El problema de la reformulación es que puede presentar grandes problemas de rendimiento debido a la longitud sintáctica de las consultas SQL resultantes, como también generar fallas.
