@@ -4,6 +4,7 @@
 \usepackage{amsthm}
 \usepackage{bbding}
 \usepackage[utf8]{inputenc}
+\usepackage{verbatim}
 
 \mode<presentation> {
 \usetheme{Madrid}
@@ -48,15 +49,37 @@ Federico Allocati, Sabrina Izcovich, Santiago Pernigotti, Germán Romano\\ % You
 \begin{frame}
 \frametitle{Material Analizado}
 \begin{itemize}
-\item \textbf{Optimizing Reformulated RDF Queries}, Damián A. Bursztyn, 2013
+\item \textbf{Optimizing Reformulated RDF Queries}, Damián A. Bursztyn, 2013.
 
+\item \textbf{Introduction to the Special Issue on Semantic Web Data Management}, Roberto De Virgilio, 2011.
 \end{itemize}
 \end{frame}
 
+
+\begin{frame}
+\frametitle{Presentación de conceptos}
+\begin{itemize}
+\item Las tecnologías de \textbf{Web Semántica} son gobernadas por el \textbf{W3C} (\textit{World Wide Web Consortium}).
+
+\item Los estándares más prominentes son los \textbf{RDF} (\textit{Framework de Descripción de Recursos}) y el \textbf{SPARQL} (\textit{Lenguaje de Queries RDF}).
+
+\item \textbf{RDF} es el éstandar para el almacenado y representación de datos y \textbf{SPARQL} es el lenguaje de consulta que devuelve los datos de un almacenamiento \textbf{RDF}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Presentación de conceptos}
+\begin{figure}[H] %[h] Aqui [b] para button [t] para top
+\begin{center}
+\includegraphics[width=340pt]{./imgs/conceptos.png}
+\caption{Relación entre conceptos.}
+\end{center}
+\end{figure}
+\end{frame}
+
 %------------------------------------------------
-\section{Contextualizando...} 
+\section{Web Semántica} 
 %------------------------------------------------
-\subsection{Web Semántica}
 \begin{frame}
 \frametitle{¿Qué es la Web Semántica?} 
 \begin{block}{Web Semántica}
@@ -90,7 +113,7 @@ Federico Allocati, Sabrina Izcovich, Santiago Pernigotti, Germán Romano\\ % You
 \end{figure}
 \end{frame}
 %------------------------------------------------
-\subsection{RDF}
+\section{RDF}
 \begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
 \frametitle{¿Qué es RDF?}
 \begin{block}{Resource Description Framework}
@@ -137,20 +160,57 @@ Los nodos son las elipses, los ejes la relación y los rectángulos son strings.
 \end{center}
 \end{frame}
 %------------------------------------------------
-
+\section{BGP}
 \begin{frame}
-\frametitle{Queries BGP y SPARQL}
+\frametitle{Queries BGP}
 \begin{exampleblock}{Basic Graph Pattern}
-
-
-\end{exampleblock}
-
-\begin{exampleblock}{SPARQL}
-Es el estándar W3C para consultas RDF.
-
+\begin{itemize}
+\item<1-> Las consultas BGP son un subconjunto del lenguaje de consultas SPARQL W3C para RDF. 
+\item<2-> El mismo se corresponde con la clase de familias de consultas conjuntivas de las bases de datos relacionales. 
+\item<3-> Conforman las consultas SPARQL más utilizadas en el mundo real.
+\item<4-> Están compuestas por un conjunto de variables distinguidas, la cabeza y el conjunto de patrones de tripla (los BGP).
+\end{itemize}
 \end{exampleblock}
 \end{frame}
+
 %------------------------------------------------
+\begin{frame}
+\frametitle{Ejemplo de BGP}
+\begin{figure}[ht]
+\centering
+\begin{minipage}[b]{0.45\linewidth}
+\includegraphics[width=140pt]{./imgs/ejemploBGP-01.png}
+\label{fig:minipage1}
+\end{minipage}
+\quad
+\begin{minipage}[b]{0.45\linewidth}
+\includegraphics[width=140pt]{./imgs/ejemploBGP-01_grafico.png}
+\label{fig:minipage2}
+\end{minipage}
+
+Consulta BGP que devuelve true si existe un director que protagonizó su película.
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplo de BGP}
+\begin{figure}[ht]
+\centering
+\begin{minipage}[b]{0.45\linewidth}
+\includegraphics[width=140pt]{./imgs/ejemploBGP-02.png}
+\label{fig:minipage1}
+\end{minipage}
+\quad
+\begin{minipage}[b]{0.45\linewidth}
+\includegraphics[width=140pt]{./imgs/ejemploBGP-02_grafico.png}
+\label{fig:minipage2}
+\end{minipage}
+
+Consulta que devuelve los actores que trabajaron en una película dirigida por un francés.
+\end{figure}
+\end{frame}
+%------------------------------------------------
+\section{RDF y RDBMs}
 \begin{frame}
 \frametitle{RDF y RDBMs}
 %------------------------------------------------
@@ -184,6 +244,7 @@ Es el estándar W3C para consultas RDF.
 \end{frame}
 
 %------------------------------------------------
+\section{Reformulación de Queries}
 \begin{frame}
 \frametitle{Reformulación de queries}
 
