@@ -9,6 +9,7 @@
 \usepackage{lastpage}
 \usepackage{float}
 \usepackage{tikz}
+\usepackage{mattens}
 
 \pagestyle{fancy}
 \thispagestyle{fancy}
@@ -58,6 +59,82 @@ En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la
 \newpage
 \section{RDF}
 Un set de datos RDF consiste en datos explícitos e implícitos presentes en la base de datos, dados por restricciones semánticas que deben cumplir. Dichos datos son obtenidos por un proceso que considera las restricciones para inferir todas las posibles consecuencias de la base de datos existente.
+
+\newpage
+
+
+\section{Reformulación de Consultas}
+
+Dada una query q y un \textit{dataset} D, queremos reformular q con respecto al esquema D en otra query q$'$ tal que la evaluación de q$'$ contra los datos de D (es decir, q$'$(D$_{data}$)) sea el conjunto respuesta completo de q contra D (o sea, q(D$^{\infty}$)).
+
+\subsection{Consultas Parcialmente Instanciadas}
+
+Sea $q(\bS{x}) :- t_{1},...,t_{n}$ una query y $\sigma$ un mapeo de un subconjunto de variables y \textit{blank nodes} de q a algunos valores (constantes, URIs o \textit{blank nodes}).\\
+
+Una \textbf{consulta parcialmente instanciada} con respecto a q, notada $q_{\sigma}$, es una query $q_{\sigma}(\bS{x}_{\sigma}) :- (t_{1},...,t_{n})_{\sigma}$ donde el mapeo $\sigma$ fue aplicado tanto en las variables de la cabeza como en las variables del cuerpo de q. En el caso $\sigma = \emptyset$, vale $q_{\sigma} = q$.\\
+
+Dada una consulta parcialmente instanciada $q_{\sigma}(\bS{x}_{\sigma}) :- (t_{1},...,t_{n})_{\sigma}$ cuyo conjunto de variables y \textit{blank nodes} es VarBl($q_{\sigma}$) y un \textit{dataset} D cuyo conjunto de valores es Val(D), la evaluación de $q_{\sigma}$ contra D es:\\
+\includegraphics[scale=0.45]{imgs/01.png}\\
+
+El conjunto respuesta completo de $q_{\sigma}$ contra D es $q_{\sigma}(D^{\infty})$.
+
+\subsection{Reglas de Reformulación}
+
+A continuación se muestran las 13 reglas de reformulación, cada una definiendo una transformación de la forma $\frac{input}{output}$, para una consulta parcialmente instanciada $q_{\sigma}$ con respecto a un \textit{dataset} D:
+
+\begin{center}
+\includegraphics[scale=0.8]{imgs/02.png}
+\end{center}
+
+Se pueden distinguir dos grupos de reglas:
+\begin{itemize}
+
+\item Las reglas 2.5 hasta 2.13 reformulan la query bindeando una de las variables de la query a la propiedad RDF $\tau$ ó a una clase o propiedad definida en el \textit{dataset}.
+
+\item Las reglas de 2.14 a 2.17 alteran las queries reemplazando una de sus triplas por otra, mediante el uso de esquemas.
+
+\end{itemize}
+
+\subsection{Resolución de Consultas Basada en Reformulación}
+
+La resolución de consultas basada en reformulación reformula una query q con respecto a las restricciones definidas en el esquema RDF del \textit{dataset} D en una query q$'$ tal que $q'(D_{data}) = q(D^{\infty})$.\\
+
+La técnica de reformulación de consultas mostrada en las subsecciones anteriores no cumple con lo anterior, a causa de la indistinguibilidad de los \textit{blank nodes}.\\
+
+Para solucionar esto, se define lo siguiente:
+
+\begin{itemize}
+
+\item La \textbf{evaluación no estándar} de una query parcialmente instanciada $q_{\sigma}$ contra un \textit{dataset} D, siendo Var($q_{\sigma}$) el conjunto de variables de q y Val(D) el conjunto de valores de D, se define como:\\
+\includegraphics[scale=0.5]{imgs/03.png}\\
+Observación: los \textit{blank nodes} quedan intactos.
+
+\item La siguiente \textbf{propiedad} relaciona evaluación y conjunto respuesta estándar y no estándar.\\
+Sea D \textit{database} y $q_{\sigma}$ una query parcialmente instanciada contra D, vale:
+
+\includegraphics[scale=0.5]{imgs/04.png}
+
+\item \textbf{Teorema}: (nueva técnica para resolver consultas basada en reformulación) Sea q una query BGP sin \textit{blank nodes} y D un \textit{dataset} cuyo esquema es S, vale:
+
+\begin{center}
+\includegraphics[scale=0.55]{imgs/05.png}
+\end{center}
+
+\end{itemize}
+
+\subsection{Algoritmo de Reformulación}
+
+El algoritmo de reformulación toma la query original q y las reglas de reformulación detallas anteriormente para generar nuevas queries mediante la aplicación de dichas reglas a los átomos de q. Se procede iterativamente sobre el resultado obtenido hasta que no se obtengan nuevas queries. Finalmente, se devuelve la unión de las nuevas queries generadas y la query original.\\
+
+En cada iteración del algoritmo mostrado a continuación se matchean los átomos de la query con el input de cada regla; de haber coincidencia, se aplica dicha regla.\\
+
+Este algoritmo termina, es correcto y completo. La complejidad de la reformulación de queries es polinomial en el tamaño del esquema y exponencial en el tamaño de la query. La resolución de la consulta contra un \textit{dataset} D está en LogSpace en el tamaño de D y es exponencial en el tamaño de la query.\\
+
+\vspace{100 mm}
+
+\begin{center}
+\includegraphics[scale=0.55]{imgs/06.png}
+\end{center}
 
 \newpage
 \section{Mecanismos de conversión de la Web}
