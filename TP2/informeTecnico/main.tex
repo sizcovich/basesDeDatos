@@ -62,6 +62,35 @@ Un set de datos RDF consiste en datos explícitos e implícitos presentes en la 
 
 \newpage
 
+\section{RDF y RDBMS}
+Una alternativa frente a las tradicionales tablas de datos relacionales que incluyen valores NULL en ellas, son las tablas-V. Estas permiten el uso de variables en sus filas, la cual es una característica importante porque posibilita el uso de juntas para valores desconocidos, dado que es posible utilizar la misma variable en diferentes filas.
+\\\\
+Utilizando la evaluación del sistema de gestión de base de datos relacionales (RDBMS), podemos obtener el conjunto de respuestas de consultas BGP de la siguiente forma:
+
+Dado un conjunto de datos $D$, podemos almacenarlo todo en una tabla-V de la forma Triples(s,p,o), guardando los triples de $D$ dentro de la tabla como filas, y además convirtiendo los nodos blancos en variables. Entonces, dado una consulta BGP de la forma $q(x) : s_{1} p_{1} o_{1}, ..., s_{n} p_{n} o_{n}$, se puede reescribir como una consulta conjuntiva para la evaluación del RDBMS del siguiente modo:
+\\
+$q(x): \wedge ^n _{i = 1} Triples(s_{i}, p_{i}, o_{i})$
+\\\\
+Mediante dos técnicas establecidas para el manejo de vinculación RDF, llamadas saturación y reformulación, podemos calcular la respuesta de la consulta $q$ en $D$.
+\\\\
+\textbf{Saturación}: Se evalúa la consulta $q(x): \wedge ^n _{i = 1} Triples(s_{i}, p_{i}, o_{i})$ en la tabla Triples que contenga la clausura de $D$ (todos los datos implícitos se encuentran dentro de la tabla). Esta técnica calcula la clausura del conjunto de datos usando las reglas de vinculación. Sus desventajas son que para calcular el conjunto de datos completo requiere tiempo de cómputo y espacio de almacenamiento, y debe ser recalculado por cada actualización realizada.
+\\
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=270pt]{imgs/saturacion}
+\caption{Visión general del proceso de respuesta de una consulta basada en saturación.}
+\end{center}
+\end{figure}
+\\
+\textbf{Reformulacion}: Se evalúa $q'(x): \wedge ^n _{i = 1} Triples(s_{i}, p_{i}, o_{i})$ en la tabla Triples que contenga a $D$, donde $q'$ es la reformulación de la consulta $q$. La reformulación se realiza utilizando reglas de vinculación inmediatas, de manera tal que la consulta $q'$ sobre $D$ sea equivalente a $q$ sobre la clausura de $D$. La principal ventaja de este método es que no se ve afectado por las actualizaciones, ya que no es necesario recalcular la clausura del conjunto de datos. 
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=270pt]{imgs/reformulacion}
+\caption{Visión general del proceso de respuesta de una consulta basada en reformulación.}
+\end{center}
+\end{figure}
+
 
 \section{Reformulación de Consultas}
 
