@@ -43,20 +43,27 @@
 
 \section{Introducción}
 
-El siguiente informe consiste en un análisis enfocado en la \textit{Web Semántica}. Para la realización del mismo, basamos nuestra investigación en la tesis\footnote{http://dc.uba.ar/inv/tesis/licenciatura/2013/bursztyn.pdf} presentada por \textit{Damián A. Bursztyn} en el año 2013 sobre \textbf{Optimización de consultas RDF reformuladas} y en el artículo \textbf{Introduction to the Special Issue on Semantic Web Data Management} escrito por \textit{Roberto De Virgilio} en 2011.
+El siguiente informe consiste en un análisis técnico enfocado en la \textit{Web Semántica}. Para la realización del mismo, basamos nuestra investigación en la tesis\footnote{http://dc.uba.ar/inv/tesis/licenciatura/2013/bursztyn.pdf} presentada por \textit{Damián A. Bursztyn} en el año 2013 sobre \textbf{Optimización de consultas RDF reformuladas} y en el artículo \textbf{Introduction to the Special Issue on Semantic Web Data Management} escrito por \textit{Roberto De Virgilio} en 2011.
 
 En lo que sigue, explicaremos los conceptos de Web Semántica y sus problemáticas, de su formato de representación \textit{RDF} y de los mecanismos que ayudan a convertir la Web en una infraestructura global en la que es posible compartir, y reutilizar datos y documentos entre diferentes tipos de usuarios.
 
-\newpage
-\section{Semántica Web}
-La Web Semántica consiste en una Web Extendida dotada de mayor significado gracias a los metadatos que acompañan a los datos que circulan. Su utilidad principal es encontrar soluciones a problemas habituales en la búsqueda de información gracias a la utilización de una infraestructura común mediante la que se procesa y transfiere información de una manera sencilla. Esta Web extendida y basada en el \textit{significado}, se apoya en lenguajes universales que resuelven los problemas ocasionados por una Web carente de semántica en la que, en ocasiones, el acceso a la información se convierte en una tarea difícil.
+\section{Web Semántica}
+La Web Semántica consiste en una Web Extendida dotada de mayor significado gracias a los metadatos que acompañan a los datos que circulan. Su utilidad principal es encontrar soluciones a problemas habituales en la búsqueda de información gracias a la utilización de una infraestructura común mediante la que se procesa y transfiere información de una manera sencilla. Esta Web extendida y basada en el \textit{significado}, se apoya en lenguajes universales que resuelven los problemas ocasionados por una Web carente de semántica en la que, en ocasiones, el acceso a la información se convierte en una tarea difícil.\\
 
-\section{Sémantica Web y Manejo de Datos}
-El exponencial crecimiento de los datos en la web deja en claro la necesidad de complementar el estudio de la web Semántica con dos disciplinas bien desarrolladas, modelado conceptual y manejo de datos. 
+Es menester aclarar algunos conceptos que se utilizarán a lo largo del trabajo:
+\begin{itemize}
+\item Las tecnologías de \textbf{Web Semántica} son gobernadas por el \textbf{W3C} (\textit{World Wide Web Consortium}).
+\item Los estándares más utilizados son \textbf{RDF} (\textit{Framework de Descripción de Recursos}) y \textbf{SPARQL} (\textit{Lenguaje de Queries RDF}).
+\item \textbf{RDF} se usa para el almacenado y representación de datos y \textbf{SPARQL} es el lenguaje de consulta que devuelve los datos de un almacenamiento \textbf{RDF}.\\
+Luego, un set de datos \textbf{RDF} consiste en datos explícitos e implícitos presentes en la base de datos, dados por restricciones semánticas que deben cumplir. Dichos datos son obtenidos por un proceso que considera las restricciones para inferir todas las posibles consecuencias de la base de datos existente.
+\end{itemize}
+
+\section{Web Semántica y Manejo de Datos}
+El exponencial crecimiento de los datos en la web deja en claro la necesidad de complementar el estudio de la Web Semántica con dos disciplinas bien desarrolladas: modelado conceptual y manejo de datos. 
 \\
-Modelado conceptual se encarga del desarrollo de técnicas avanzadas y herramientas que permiten la representación precisa y razonamiento de artefactos que modelan objetos e información del mundo real. Manejo de datos, por otro lado, se encarga del desarrollo de técnicas para el eficiente almacenamiento, consultas, recuperación y manejo de grandes volúmenes de información de diferente naturaleza, es decir, datos relacionales, documentos XML, blogs, etc.
+El Modelado Conceptual se encarga del desarrollo de técnicas avanzadas y herramientas que permiten la representación precisa y el razonamiento de artefactos que modelan objetos e información del mundo real. El Manejo de Datos, en cambio, se encarga del desarrollo de técnicas para el eficiente almacenamiento, consultas, recuperación y manejo de grandes volúmenes de información de diferente naturaleza, es decir, datos relacionales, documentos XML, blogs, etc.
 \\
-A continuación se presentan contribuciones que abarcan las tres áreas, semántica web, modelado conceptual y manejo de datos.
+A continuación se presentan contribuciones que abarcan las tres áreas; Web Semántica, Modelado Conceptual y Manejo de Datos.
 \\\\
 \textbf{Quality-aware} propone algunas estrategias para diseñar funciones de similitud que capturan el grado de libertad para la equivalencia de dos entidades dadas. El método se basa en la combinación de múltiples evidencias, con la ayuda de calidad estimada de valores individuales similares y con la particular atención a la perdida de información, que es común en el contexto de la web. 
 \\\\
@@ -70,16 +77,59 @@ A continuación se presentan contribuciones que abarcan las tres áreas, semánt
 \\\\
 \textbf{A step forward is taken in PoweR-Gen: A Power-law Based Generator of RDFS Schemas} presenta el primer generador de esquemas RDF, teniendo en cuenta las características exhibidas por los esquemas reales SW.
 
-
-\newpage
 \section{Problemas de la Web Semántica}
 En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas RDF sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas RDF en consultas SQL para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS). Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema que esta solución presenta es de rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMSs no son capaces de optimizar eficientemente estas consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación.
 
-\newpage
-\section{RDF}
-Un set de datos RDF consiste en datos explícitos e implícitos presentes en la base de datos, dados por restricciones semánticas que deben cumplir. Dichos datos son obtenidos por un proceso que considera las restricciones para inferir todas las posibles consecuencias de la base de datos existente.
+\section{SPARQL}
+Es el estándar W3C para consultas RDF. En otras palabras, es un lenguaje de consultas semánticas para bases de datos, habilitado para devolver y manipular datos guardados en el formato RDF. El mismo permite hacer búsquedas sobre los recursos de la Web Semántica utilizando distintas fuentes datos.
 
-\newpage
+\section{Basic Graph Pattern}
+Las consultas BGP son un subconjunto del lenguaje de consultas SPARQL W3C para RDF. El mismo se corresponde con la clase de familias de consultas conjuntivas de las bases de datos relacionales. Además, las BGP conforman las consultas SPARQL más utilizadas en el mundo real.
+Principalmente, están compuestas por un conjunto de variables distinguidas, la cabeza y el conjunto de patrones de tripla (los BGP).
+
+\subsection{Ejemplo}
+\begin{figure}[H]
+        \setbox0\hbox{%
+                \includegraphics[width=.45\textwidth]{./imgs/ejemploBGP-02.png}%
+        }%
+        \setbox2\hbox{%
+                \includegraphics[width=.45\textwidth]{./imgs/ejemploBGP-02_grafico.png}%
+        }%
+        \ifdim\ht0>\ht2
+                \setbox0\hbox{%
+                        \includegraphics[height=\ht2]{./imgs/ejemploBGP-02.png}%
+                }%
+        \else
+                \setbox2\hbox{%
+                        \includegraphics[height=\ht2]{./imgs/ejemploBGP-02_grafico.png}%
+                }%
+        \fi
+        \noindent
+        \parbox{.45\textwidth}{%
+                \centering
+                \unhbox0
+                \caption{Consulta RDF}
+                \label{fg:methods}
+        }%
+        \hfil
+        \parbox{.45\textwidth}{%
+                \centering
+                \unhbox2
+                \caption{Grafo RDF}
+                \label{fg:method_detail}
+        }%
+\end{figure}
+\vspace*{1cm}
+Consulta que devuelve los actores que trabajaron en una película dirigida por un francés.
+
+\section{SPARQL y BGP}
+
+\begin{figure}[H] %[h] Aqui [b] para button [t] para top
+\begin{center}
+\includegraphics[width=400pt]{./imgs/conceptos.png}
+\caption{Relación entre conceptos.}
+\end{center}
+\end{figure}
 
 \section{RDF y RDBMS}
 Una alternativa frente a las tradicionales tablas de datos relacionales que incluyen valores NULL en ellas, son las tablas-V. Estas permiten el uso de variables en sus filas, la cual es una característica importante porque posibilita el uso de juntas para valores desconocidos, dado que es posible utilizar la misma variable en diferentes filas.
@@ -183,24 +233,6 @@ Este algoritmo termina, es correcto y completo. La complejidad de la reformulaci
 \begin{center}
 \includegraphics[scale=0.55]{imgs/06.png}
 \end{center}
-
-\newpage
-\section{Mecanismos de conversión de la Web}
-Para obtener una adecuada definición de los datos, la Web Semántica utiliza esencialmente OWL, SPARQL, BGP y RDF. Estos mecanismos ayudan a convertir la Web en una infraestructura global en la que es posible compartir, y reutilizar datos y documentos entre diferentes tipos de usuarios.
-\begin{itemize}
-\item \textbf{SPARQL} es lenguaje de consulta sobre RDF, que permite hacer búsquedas sobre los recursos de la Web Semántica utilizando distintas fuentes datos.
-\item \textbf{BGP} es el Patrón de grafo básico.
-\begin{itemize}
-\item Las consultas BGP son un subconjunto del lenguaje de consultas SPARQL W3C para RDF. 
-\item El mismo se corresponde con la clase de familias de consultas conjuntivas de las bases de datos relacionales. 
-\item Conforman las consultas SPARQL más utilizadas en el mundo real.
-\item Están compuestas por un conjunto de variables distinguidas, la cabeza y el conjunto de patrones de tripla (los BGP).
-\end{itemize}
-
-\item \textbf{OWL} es un mecanismo para desarrollar temas o vocabularios específicos en los que asociar esos recursos. Lo que hace OWL es proporcionar un lenguaje para definir ontologías estructuradas que pueden ser utilizadas a través de diferentes sistemas. Las ontologías, que se encargan de definir los términos utilizados para describir y representar un área de conocimiento, son utilizadas por los usuarios, las bases de datos y las aplicaciones que necesitan compartir información específica, es decir, en un campo determinado como puede ser el de las finanzas, medicina, deporte, etc. Las ontologías incluyen definiciones de conceptos básicos en un campo determinado y la relación entre ellos.
-\end{itemize}
-
-\newpage
 
 \section{Referencias}
 
