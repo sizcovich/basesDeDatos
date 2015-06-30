@@ -1,84 +1,12 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Beamer Presentation
-% LaTeX Template
-% Version 1.0 (10/11/12)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND THEMES
-%----------------------------------------------------------------------------------------
 
 \documentclass{beamer}
 \usepackage[spanish]{babel}
 \usepackage{amsthm}
 \usepackage{bbding}
 \usepackage[utf8]{inputenc}
-%\usepackage{enumitem}
 
 \mode<presentation> {
-
-% The Beamer class comes with a number of default slide themes
-% which change the colors and layouts of slides. Below this is a list
-% of all the themes, uncomment each in turn to see what they look like.
-
-%\usetheme{default}
-%\usetheme{AnnArbor}
-%\usetheme{Antibes}
-%\usetheme{Bergen}
-%\usetheme{Berkeley}
-%\usetheme{Berlin}
-%\usetheme{Boadilla}
-%\usetheme{CambridgeUS}
-%\usetheme{Copenhagen}
-%\usetheme{Darmstadt}
-%\usetheme{Dresden}
-%\usetheme{Frankfurt}
-%\usetheme{Goettingen}
-%\usetheme{Hannover}
-%\usetheme{Ilmenau}
-%\usetheme{JuanLesPins}
-%\usetheme{Luebeck}
 \usetheme{Madrid}
-%\usetheme{Malmoe}
-%\usetheme{Marburg}
-%\usetheme{Montpellier}
-%\usetheme{PaloAlto}
-%\usetheme{Pittsburgh}
-%\usetheme{Rochester}
-%\usetheme{Singapore}
-%\usetheme{Szeged}
-%\usetheme{Warsaw}
-
-% As well as themes, the Beamer class has a number of color themes
-% for any slide theme. Uncomment each of these in turn to see how it
-% changes the colors of your current slide theme.
-
-%\usecolortheme{albatross}
-%\usecolortheme{beaver}
-%\usecolortheme{beetle}
-%\usecolortheme{crane}
-%\usecolortheme{dolphin}
-%\usecolortheme{dove}
-%\usecolortheme{fly}
-%\usecolortheme{lily}
-%\usecolortheme{orchid}
-%\usecolortheme{rose}
-%\usecolortheme{seagull}
-%\usecolortheme{seahorse}
-%\usecolortheme{whale}
-%\usecolortheme{wolverine}
-
-%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
-%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
-
-%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
 }
 \usepackage{color}
 \usepackage{graphicx} % Allows including images
@@ -90,14 +18,14 @@
 
 \title[Presentación del TP2]{Semántica Web} % The short title appears at the bottom of every slide, the full title is only on the title page
 
-\author{Federico Allocati, Sabrina Izcovich, Santiago Pernigotti, Germán Romano} % Your name
+\author{Bases de Datos} % Your name
 \institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
-Departamento de Computación\\ % Your institution for the title page
+Federico Allocati, Sabrina Izcovich, Santiago Pernigotti, Germán Romano\\ % Your institution for the title page
 \medskip
 %\textit{john@smith.com} % Your email address
 }
-\date{Viernes 20 de junio de 2015} % Date, can be changed to a custom date
+\date{Miércoles 8 de julio de 2015} % Date, can be changed to a custom date
 
 \begin{document}
 
@@ -146,7 +74,7 @@ Departamento de Computación\\ % Your institution for the title page
 \frametitle{Ejemplo} 
 \begin{figure}[H] %[h] Aqui [b] para button [t] para top
 \begin{center}
-\includegraphics[width=340pt]{imgs/resultadoNormal}
+\includegraphics[width=340pt]{resultadoNormal.png}
 \caption{Resultados obtenidos con un buscador normal.}
 \end{center}
 \end{figure}
@@ -156,7 +84,7 @@ Departamento de Computación\\ % Your institution for the title page
 \frametitle{Ejemplo} 
 \begin{figure}[H] %[h] Aqui [b] para button [t] para top
 \begin{center}
-\includegraphics[width=340pt]{imgs/resultadoSemantico}
+\includegraphics[width=340pt]{resultadoSemantico.png}
 \caption{Resultados obtenidos con un buscador semántico.}
 \end{center}
 \end{figure}
@@ -167,11 +95,10 @@ Departamento de Computación\\ % Your institution for the title page
 \frametitle{¿Qué es RDF?}
 \begin{block}{Resource Description Framework}
 \begin{itemize}
-\item<1-> Modelo estándar para intercambio de datos en la Web.
-\item<2-> En particular, es el formato de datos de la web semántica.
+\item<1-> Es un grafo dirigido etiquetado para representar información en la Web en donde los ejes representan la relación entre dos fuentes (los nodos).
+\item<2-> En particular, es el formato para modelar el intercambio de datos en la web semántica. 
 \item<3-> Tiene características que facilitan la fusión de datos a pesar de que sus esquemas de organización difieran.
 \item<4-> Extiende la unión de estructuras en la Web nombrando las relaciones entre cosas.
-\item<5-> La estructura de \textit{linking} forma un grafo dirigido y etiquetado donde los ejes representan la relación entre dos fuentes (los nodos).
 \item<5-> Su utilización permite estructurar los datos a ser fusionados, expuestos y compartidos a través de diferentes aplicaciones.
 \end{itemize}
 \end{block}
@@ -203,7 +130,7 @@ Departamento de Computación\\ % Your institution for the title page
 \frametitle{Ejemplo} 
 \begin{center}
 \begin{figure}[H] %[h] Aqui [b] para button [t] para top
-\includegraphics[width=300pt]{imgs/rdfModel}
+\includegraphics[width=300pt]{rdfModel.png}
 \caption{Modelo RDF.}
 \end{figure}
 Los nodos son las elipses, los ejes la relación y los rectángulos son strings.
@@ -212,68 +139,60 @@ Los nodos son las elipses, los ejes la relación y los rectángulos son strings.
 %------------------------------------------------
 
 \begin{frame}
-% \frametitle{Ejercicio}
-% \begin{exampleblock}{Resolución}
-% Queremos ver que si $A^{h}$ = 0 para algún $h \in \mathbb{N}$ entonces $A$ no es inversible.\newline
+\frametitle{Queries BGP y SPARQL}
+\begin{exampleblock}{Basic Graph Pattern}
 
-% Supongamos que lo es,
 
-% \begin{itemize}
-% \item<2-> Sea $k$ un índice de nilpotencia de A.
-% \item<3-> Multipliquemos a $A^k$ por la inversa de $A$ $k$ veces.
-% \item<4-> $A^k(A^{-1})^k$ = $A...AA^{-1}...A^{-1}$
-% \begin{description}%[font=\normalfont]
-% \item<5->[\textcolor{black}{$\Rightarrow$}] 0 = $I$. \textbf{Abs!}
-% \end{description}
-% \item<6-> Entonces $A$ no es inversible. \Checkmark
-% \end{itemize}
+\end{exampleblock}
 
-% \end{exampleblock}
+\begin{exampleblock}{SPARQL}
+Es el estándar W3C para consultas RDF.
+
+\end{exampleblock}
+\end{frame}
+%------------------------------------------------
+\begin{frame}
+\frametitle{RDF y RDBMs}
+%------------------------------------------------
+\begin{block}{RDF y RDBMS}
+\begin{itemize}
+\item{Es posible transformar una consulta BGP en otra capaz de ser evaluada por RDBMS.}
+\item{Se almacenan los triples dentro de tablas y se reformula la consulta BGP por una equivalente.}
+\item{$q(x) : s_{1} p_{1} o_{1}, ..., s_{n} p_{n} o_{n}$ es equivalente a $q(x): \wedge ^n _{i = 1} Triples(s_{i}, p_{i}, o_{i})$}
+\item{Para resolver la consulta se empelean dos técnicas de manejo de vinculos RDF: Saturación o Reformulación.}
+\end{itemize}
+\end{block}
+\end{frame}
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{RDF y RDBMs}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=200pt]{saturacion}
+\caption{Visión general del proceso de respuesta de una consulta basada en saturación.}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=200pt]{reformulacion}
+\caption{Visión general del proceso de respuesta de una consulta basada en reformulación.}
+\end{center}
+\end{figure}
 \end{frame}
 
-%\begin{frame}
-%\frametitle{Ejercicio}
-%\begin{exampleblock}{Resolución 2}
-%Queremos ver que si $A^{k}$ = 0 para algún $k\ \in\ \mathbb{N}$ entonces $I - A$ es inversible.\newline
+%------------------------------------------------
+\begin{frame}
+\frametitle{Reformulación de queries}
 
-%Probemos construyendo la inversa, pero antes...
+\end{frame}
+%------------------------------------------------
+\begin{frame}
+\frametitle{Temas especiales en Semántica Web}
 
-%\end{exampleblock}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{Ejercicio 8}
-%Veamos una propiedad de la práctica:
-%\begin{block}{Propiedad}
-%Sea $A \in \mathbb{R}^{nxn}$ y $m \in \mathbb{N}$, entonces vale que:
-%$$(I-A)(I+A+...+A^m) = I - A^{m+1}$$
-%\end{block}
-%\end{frame}
-
-%\begin{frame}
-%\frametitle{Ejercicio}
-%\begin{exampleblock}{Resolución 2}
-%Queremos ver que si $A^{k}$ = 0 para algún $k\ \in\ \mathbb{N}$ entonces $I - A$ es inversible.\newline
-
-%\begin{itemize}
-%\item<1-> Probemos construyendo la inversa:
-
-%\item<2-> Si usamos la propiedad,
-%\begin{description}%[font=\normalfont]
-%\item<3-> $(I - A)(I + A +...+ A^{k-1})$
-%\item<4-> $= I + A +...+ A^{k-1} - A -...- A^{k-1} - A^k$
-%\item<5-> $= I - A^k$
-%\item<6-> $= I$
-%\end{description}
-
-%\item<3-> $(I - A)(I + A +...+ A^{k-1}) = I + A +...+ A^{k-1} - A -...- A^{k-1} - A^k$
-%\item<4-> $= I - A^k= I$
-	
-%\item<7-> Como existe la inversa entonces $I - A$ es inversible. \Checkmark
-%\end{itemize}
-
-%\end{exampleblock}
-%\end{frame}
+\end{frame}
 %------------------------------------------------
 
 \begin{frame}

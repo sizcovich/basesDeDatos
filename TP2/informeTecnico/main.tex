@@ -50,20 +50,7 @@ En lo que sigue, explicaremos los conceptos de Semántica Web y sus problemátic
 \section{Semántica Web}
 La semántica web consiste en una Semántica Extendida dotada de mayor significado gracias a una información mejor definida. Su utilidad principal es encontrar soluciones a problemas habituales en la búsqueda de información gracias a la utilización de una infraestructura común mediante la cual se procesa y transfiere la información de una manera sencilla. Esta Web extendida y basada en el significado, se apoya en lenguajes universales que resuelven los problemas ocasionados por una Web carente de semántica en la que, en ocasiones, el acceso a la información se convierte en una tarea difícil y frustrante.
 
-\subsection{Ejemplo}
 
-\begin{figure}[H] %[h] Aqui [b] para button [t] para top
-\begin{center}
-\includegraphics[width=400pt]{imgs/resultadoNormal}
-\caption{Resultados obtenidos con un buscador normal.}
-\end{center}
-\end{figure}
-\begin{figure}[H] %[h] Aqui [b] para button [t] para top
-\begin{center}
-\includegraphics[width=400pt]{imgs/resultadoSemantico}
-\caption{Resultados obtenidos con un buscador semántico.}
-\end{center}
-\end{figure}
 \newpage
 \section{Problemas de la Web Semántica}
 En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas RDF sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas RDF en consultas SQL para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS). Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema que esta solución presenta es de rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMSs no son capaces de optimizar eficientemente estas consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación.
