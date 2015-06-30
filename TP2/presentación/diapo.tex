@@ -175,39 +175,78 @@ Los nodos son las elipses, los ejes la relación y los rectángulos son strings.
 %------------------------------------------------
 \begin{frame}
 \frametitle{Ejemplo de BGP}
-\begin{figure}[ht]
-\centering
-\begin{minipage}[b]{0.45\linewidth}
-\includegraphics[width=140pt]{./imgs/ejemploBGP-01.png}
-\label{fig:minipage1}
-\end{minipage}
-\quad
-\begin{minipage}[b]{0.45\linewidth}
-\includegraphics[width=140pt]{./imgs/ejemploBGP-01_grafico.png}
-\label{fig:minipage2}
-\end{minipage}
-
-Consulta BGP que devuelve true si existe un director que protagonizó su película.
+\begin{figure}
+        \setbox0\hbox{%
+                \includegraphics[width=.35\textwidth]{./imgs/ejemploBGP-01.png}%
+        }%
+        \setbox2\hbox{%
+                \includegraphics[width=.35\textwidth]{./imgs/ejemploBGP-01_grafico.png}%
+        }%
+        \ifdim\ht0>\ht2
+                \setbox0\hbox{%
+                        \includegraphics[height=\ht2]{./imgs/ejemploBGP-01.png}%
+                }%
+        \else
+                \setbox2\hbox{%
+                        \includegraphics[height=\ht2]{./imgs/ejemploBGP-01_grafico.png}%
+                }%
+        \fi
+        \noindent
+        \parbox{.35\textwidth}{%
+                \centering
+                \unhbox0
+                \caption{Consulta RDF}
+                \label{fg:methods}
+        }%
+        \hfil
+        \parbox{.35\textwidth}{%
+                \centering
+                \unhbox2
+                \caption{Grafo RDF}
+                \label{fg:method_detail}
+        }
 \end{figure}
+\vspace*{1.2cm}
+Consulta BGP que devuelve true si existe un director que protagonizó su película.
 \end{frame}
 
 \begin{frame}
 \frametitle{Ejemplo de BGP}
-\begin{figure}[ht]
-\centering
-\begin{minipage}[b]{0.45\linewidth}
-\includegraphics[width=140pt]{./imgs/ejemploBGP-02.png}
-\label{fig:minipage1}
-\end{minipage}
-\quad
-\begin{minipage}[b]{0.45\linewidth}
-\includegraphics[width=140pt]{./imgs/ejemploBGP-02_grafico.png}
-\label{fig:minipage2}
-\end{minipage}
-
-Consulta que devuelve los actores que trabajaron en una película dirigida por un francés.
+\begin{figure}
+        \setbox0\hbox{%
+                \includegraphics[width=.45\textwidth]{./imgs/ejemploBGP-02.png}%
+        }%
+        \setbox2\hbox{%
+                \includegraphics[width=.45\textwidth]{./imgs/ejemploBGP-02_grafico.png}%
+        }%
+        \ifdim\ht0>\ht2
+                \setbox0\hbox{%
+                        \includegraphics[height=\ht2]{./imgs/ejemploBGP-02.png}%
+                }%
+        \else
+                \setbox2\hbox{%
+                        \includegraphics[height=\ht2]{./imgs/ejemploBGP-02_grafico.png}%
+                }%
+        \fi
+        \noindent
+        \parbox{.45\textwidth}{%
+                \centering
+                \unhbox0
+                \caption{Consulta RDF}
+                \label{fg:methods}
+        }%
+        \hfil
+        \parbox{.45\textwidth}{%
+                \centering
+                \unhbox2
+                \caption{Grafo RDF}
+                \label{fg:method_detail}
+        }%
 \end{figure}
+\vspace*{1.2cm}
+Consulta que devuelve los actores que trabajaron en una película dirigida por un francés.
 \end{frame}
+
 %------------------------------------------------
 \section{RDF y RDBMs}
 \begin{frame}
@@ -278,6 +317,36 @@ Para arreglarlo, se aplican técnicas de \textbf{Reformulación} a la consulta e
 
 \end{frame}	
 %------------------------------------------------
+
+\begin{frame}
+\frametitle{Resumiendo}
+\begin{itemize}
+\item<1-> La Web Semántica agrega información adicional a los datos de la Web (descripción del contenido, significado y relación de los datos).
+\item<2-> El formato de datos que utiliza es RDF, que necesita técnicas eficientes y escalables de gestión de datos para responder consultas sobre grandes volúmenes de datos heterogéneos.
+\item<3-> Se traducen las consultas RDF en consultas SQL, pero esto genera problemas a causa de los datos implíticos.
+\item<4-> Una opción para esto es reformular las consultas para que devuelvan la respuesta completa.
+\item<5-> Con la reformulación aparecen problemas de rendimiento debidos a la longitud sintáctica de las consultas, que pueden generar fallas.
+\end{itemize}
+\end{frame}
+
+
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Extensión de la tesis}
+\begin{itemize}
+\item<1-> Se presentan modificaciones para que la evaluación de consultas reformuladas sea más eficiente.
+\begin{itemize}
+\item<2-> La primera consiste en enumerar consultas alternativas equivales obtenidas mediante agrupamiento de los átomos de la consulta original y la reformulación de los mismos por separado, enviándolos de a uno al RDBMs. Luego, unirlos con Joins.
+\item<3-> La segunda, en evaluar distintas alternativas sintácticas en SQL (subconsultas cuyos resultados deben unirse).
+\end{itemize}
+\item<4-> La tesis presenta distintas heurísticas para, dada una consulta inicial y las reglas semánticas de la base de datos, realizar las consultas necesarias de forma automática para producir una consulta SQL completa y eficiente.
+\end{itemize}
+\end{frame}
+
+
+%------------------------------------------------
+
 
 \begin{frame}
 \Huge{\centerline{¿Preguntas?}}
