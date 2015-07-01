@@ -58,6 +58,44 @@ Es menester aclarar algunos conceptos que se utilizarán a lo largo del trabajo:
 Luego, un set de datos \textbf{RDF} consiste en datos explícitos e implícitos presentes en la base de datos, dados por restricciones semánticas que deben cumplir. Dichos datos son obtenidos por un proceso que considera las restricciones para inferir todas las posibles consecuencias de la base de datos existente.
 \end{itemize}
 
+\section{RDF y RDF Schema}
+RDF provee un lenguaje simple que permite describir metadatos sobre recursos web en forma de triplas $<s$ $p$ $o>$. Una tripla establece que el valor de la propiedad $p$ para el sujeto $s$ es el objeto $o$. El sujeto y la propiedad son URIs dirigidas a recursos web, mientras que el objeto puede ser tanto una URI como un valor constante. 
+\\
+Una característica importante de RDF son los $blank nodes$, ya que permiten representar constantes o URIs desconocidas. En una tripla RDF un $blank node$ es un sujeto u objeto que no identifica ni una URI ni un valor. La notación usada para referirnos a ellos es la de $\_ :b$
+\\
+$s$ $\tau$ $o$ declara que el sujeto $s$ pertenece a la clase $o$.
+  
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=170pt]{imgs/ejemplo_rdf}
+\caption{Ejemplo de RDF}
+\end{center}
+\end{figure}
+
+En el ejemplo previo se describe el hecho de que ``Around the World in Eighty Days'' es un libro, del género novela, que fue publicado en 1873 y escrito por Julio Verne.
+
+Una alternativa a la representación dada, es representar las triplas en forma de grafo dirigido, donde los nodos son sujetos u objetos etiquetados con sus valores y las aristas son las propiedades.
+\\
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=300pt]{imgs/ejemplo_rdfgrafo}
+\caption{Ejemplo RDF representado como grafo}
+\end{center}
+\end{figure}
+
+RDFS (RDF squema) es una extensión de RDF que mejora el poder descriptivo de un $dataset$ RDF a través de la declaración de restricciones. Un RDFS especifica restricciones de los individuos (clases) y las relaciones (propiedades) usadas en las triplas RDF, habilitando \textit{encolamiento}\footnote{http://www.w3.org/TR/rdf11-mt/\#rdf-entailment} (una de las características más importantes de la Web Semántica). 
+
+En el ejemplo anterior, se presenta un $dataset$ dentro del que se presenta que \textit{Julio Verne} ha escrito el libro ``Around the World in Eighty Days''. Como un RDFS puede establecer que todos los que escriben libros son escritores, el hecho de que \textit{Julio Verne} sea un escritor está implícito en el $dataset$.
+\newpage
+En la siguiente tabla se pueden observar posibles tipos de restricciones. $Domain$\footnote{Dominio} y $range$\footnote{rango} denotan, respectivamente, el primer y el segundo atributo de cada propiedad.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=250pt]{imgs/constraints}
+\caption{Restricciones en RDFS}
+\end{center}
+\end{figure}
+
 \section{Web Semántica y Manejo de Datos}
 El exponencial crecimiento de los datos en la web deja en claro la necesidad de complementar el estudio de la Web Semántica con dos disciplinas bien desarrolladas: modelado conceptual y manejo de datos. 
 \\
@@ -79,50 +117,6 @@ A continuación se presentan contribuciones que abarcan las tres áreas; Web Sem
 
 \section{Problemas de la Web Semántica}
 En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas RDF sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas RDF en consultas SQL para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS). Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema que esta solución presenta es de rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMSs no son capaces de optimizar eficientemente estas consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación.
-
-\newpage
-\section{RDF y RDF Schema}
-RDF provee un lenguaje simple que permite describir metadatos sobre recursos web en forma de triplas $<s$ $p$ $o>$. Una tripla establece que el valor de la propiedad $p$ para el sujeto $s$ es el objeto $o$. El sujeto y la propiedad son URIs dirigidas a recursos web, mientras que el objeto puede ser tanto una URI como un valor constante. 
-\\
-Una característica importante de RDF son los $blank nodes$, ya que permiten representar constantes o URIs desconocidas. En una tripla RDF un $blank node$ es un sujeto u objeto que no identifica ni una URI ni un valor. La notación usada para referirnos a ellos es la de $\_ :b$
-\\
-$s$ $\tau$ $o$ declara que el sujeto $s$ pertenece a la clase $o$.
-  
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=170pt]{imgs/ejemplo_rdf}
-\caption{Ejemplo de RDF}
-\end{center}
-\end{figure}
-
-
-En el ejemplo previo se describe el hecho de que $"$Around the World in Eighty Days$"$ es un libro, del género novela, que fue publicado en 1873 y escrito por Julio Verne.
-
-Una alternativa a la representación dada, es representar las triplas en forma de grafo dirigido, donde los nodos son sujetos u objetos etiquetados con sus valores y las aristas son las propiedades.
-\\
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=300pt]{imgs/ejemplo_rdfgrafo}
-\caption{Ejemplo RDF representado como grafo}
-\end{center}
-\end{figure}
-
-
-RDFS( RDF squema) es una extensión de RDF que mejora el poder descriptivo de un $dataset$ RDF a través de la declaración de $constraints$. Un RDFS especifica $constrains$ en los individuos(clases) y las relaciones (propiedades) usadas en las triplas RDF, habilitando $entailment$ (una de la más importantes características de la Web Semántica). 
-
-En el ejemplo anterior, se presenta un $dataset$ dentro del cual está el hecho de que $"$Julio Verne$"$ ha escrito el libro $"$Around the World in Eighty Days$"$, por otro lado un RDFS puede establecer que todos los que escriben libros son escritores, el hecho de que $"$Julio Verne$"$ es un escritor está implícito en el $dataset$.
-\newpage
-En la siguiente tabla se puede observar los tipos de $constraints$. $Domain$ y $range$ denotan, respectivamente, el primer y el segundo atributo de la cada propiedad.
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=250pt]{imgs/constraints}
-\caption{Constraints en RDFS}
-\end{center}
-\end{figure}
-
-
-
 
 \section{SPARQL}
 Es el estándar W3C para consultas RDF. En otras palabras, es un lenguaje de consultas semánticas para bases de datos, habilitado para devolver y manipular datos guardados en el formato RDF. El mismo permite hacer búsquedas sobre los recursos de la Web Semántica utilizando distintas fuentes datos.

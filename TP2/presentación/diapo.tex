@@ -294,57 +294,6 @@ Consulta que devuelve los actores que trabajaron en una película dirigida por u
 Para solucionarlo, se aplican técnicas de \textbf{Reformulación} a la consulta entrante para luego traducirla a una consulta SQL que, al ser evaluada por el RDBMs devuelve la respuesta completa.
 \end{frame}	
 
-
-\begin{frame}
-\frametitle{Ejemplo}
-\begin{figure}[H]
-\begin{center}
-\includegraphics[scale=0.25]{./imgs/ejReformulation1}
-%\caption{Visión general del proceso de respuesta de una consulta basada en reformulación.}
-\end{center}
-\end{figure}
-
-\begin{figure}[H]
-\begin{center}
-\includegraphics[scale=0.30]{./imgs/ejReformulation2}
-%\caption{Visión general del proceso de respuesta de una consulta basada en reformulación.}
-\end{center}
-\end{figure}
-
-\begin{center}
-(Reglas utilizadas)
-\end{center}
-
-\end{frame}	
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Resumiendo}
-\begin{itemize}
-\item<1-> La Web Semántica agrega información adicional a los datos de la Web (descripción del contenido, significado y relación de los datos).
-\item<2-> El formato de datos que utiliza es RDF, que necesita técnicas eficientes y escalables de gestión de datos para responder consultas sobre grandes volúmenes de datos heterogéneos.
-\item<3-> Se traducen las consultas RDF en consultas SQL, pero esto genera problemas a causa de los datos implíticos.
-\item<4-> Una opción para esto es reformular las consultas para que devuelvan la respuesta completa.
-\item<5-> Con la reformulación aparecen problemas de rendimiento debidos a la longitud sintáctica de las consultas, que pueden generar fallas.
-\end{itemize}
-\end{frame}
-
-
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Extensión de la tesis}
-\begin{itemize}
-\item<1-> Se presentan modificaciones para que la evaluación de consultas reformuladas sea más eficiente.
-\begin{itemize}
-\item<2-> La primera consiste en enumerar consultas alternativas equivales obtenidas mediante agrupamiento de los átomos de la consulta original y la reformulación de los mismos por separado, enviándolos de a uno al RDBMs. Luego, unirlos con Joins.
-\item<3-> La segunda, en evaluar distintas alternativas sintácticas en SQL (subconsultas cuyos resultados deben unirse).
-\end{itemize}
-\item<4-> La tesis presenta distintas heurísticas para, dada una consulta inicial y las reglas semánticas de la base de datos, realizar las consultas necesarias de forma automática para producir una consulta SQL completa y eficiente.
-\end{itemize}
-\end{frame}
-
-
 %------------------------------------------------
 
 
