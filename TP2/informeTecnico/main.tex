@@ -205,11 +205,11 @@ Dada una query q y un \textit{dataset} D, queremos reformular q con respecto al 
 
 \subsection{Consultas Parcialmente Instanciadas}
 
-Sea $q(\bS{x}) :- t_{1},...,t_{n}$ una query y $\sigma$ un mapeo de un subconjunto de variables y \textit{blank nodes} de q a algunos valores (constantes, URIs o \textit{blank nodes}).\\
+Sea $q(\bS{x})$ :- $t_{1},...,t_{n}$ una query y $\sigma$ un mapeo de un subconjunto de variables y \textit{blank nodes} de q a algunos valores (constantes, URIs o \textit{blank nodes}).\\
 
-Una \textbf{consulta parcialmente instanciada} con respecto a q, notada $q_{\sigma}$, es una query $q_{\sigma}(\bS{x}_{\sigma}) :- (t_{1},...,t_{n})_{\sigma}$ donde el mapeo $\sigma$ fue aplicado tanto en las variables de la cabeza como en las variables del cuerpo de q. En el caso $\sigma = \emptyset$, vale $q_{\sigma} = q$.\\
+Una \textbf{consulta parcialmente instanciada} con respecto a q, notada $q_{\sigma}$, es una query $q_{\sigma}(\bS{x}_{\sigma})$ :- $(t_{1},...,t_{n})_{\sigma}$ donde el mapeo $\sigma$ fue aplicado tanto en las variables de la cabeza como en las variables del cuerpo de q. En el caso $\sigma = \emptyset$, vale $q_{\sigma} = q$.\\
 
-Dada una consulta parcialmente instanciada $q_{\sigma}(\bS{x}_{\sigma}) :- (t_{1},...,t_{n})_{\sigma}$ cuyo conjunto de variables y \textit{blank nodes} es VarBl($q_{\sigma}$) y un \textit{dataset} D cuyo conjunto de valores es Val(D), la evaluación de $q_{\sigma}$ contra D es:\\
+Dada una consulta parcialmente instanciada $q_{\sigma}(\bS{x}_{\sigma})$ :- $(t_{1},...,t_{n})_{\sigma}$ cuyo conjunto de variables y \textit{blank nodes} es VarBl($q_{\sigma}$) y un \textit{dataset} D cuyo conjunto de valores es Val(D), la evaluación de $q_{\sigma}$ contra D es:\\
 \includegraphics[scale=0.45]{imgs/01.png}\\
 
 El conjunto respuesta completo de $q_{\sigma}$ contra D es $q_{\sigma}(D^{\infty})$.
@@ -270,6 +270,20 @@ Este algoritmo termina, es correcto y completo. La complejidad de la reformulaci
 
 \begin{center}
 \includegraphics[scale=0.55]{imgs/06.png}
+\end{center}
+
+\subsection{Ejemplo de Reformulación}
+
+Consideremos la query $q(x,y)$ :- $x \tau y$ y la siguiente \textit{database} D:
+
+\begin{center}
+\includegraphics[scale=0.3]{imgs/ejReformulation1.png}
+\end{center}
+
+Aplicando el algoritmo de reformulación se obtiene, siendo S el esquema de D, al conjunto respuesta completo de q contra D:
+
+\begin{center}
+\includegraphics[scale=0.35]{imgs/ejReformulation2.png}
 \end{center}
 
 \section{Problemas de la Web Semántica y Posibles Soluciones}
