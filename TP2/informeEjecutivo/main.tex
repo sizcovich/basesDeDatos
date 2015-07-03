@@ -67,10 +67,36 @@ En lo que sigue, vemos la diferencia entre la Web Semántica y la Web clásica a
 \section{Resource Description Framework}
 Es el principal formato de los datos de la Web Semántica. Un set de datos \textit{Resource Description Framework} (o \textit{RDF}) consiste en datos explícitos e implícitos presentes en la base de datos, dados por restricciones semánticas. Éstos son obtenidos por un proceso que considera todas las restricciones para inferir las posibles consecuencias de la base de datos existente.
 
-Principalmente, proporcionan información descriptiva simple sobre los recursos que se encuentran en la Web y que se utiliza, por ejemplo, en catálogos de libros, directorios, colecciones personales de música, fotos, eventos, etc.
+Principalmente, proporcionan información descriptiva simple sobre los recursos que se encuentran en la Web y que se utiliza, por ejemplo, en catálogos de libros, directorios, colecciones personales de música, fotos, eventos, etc.\\
+
+\textbf{Ejemplo:}\\
+\newline
+El texto: \textit{``Javier Perez es el autor del documento cuya URL es http://www.dc.uba.ar/examen.pdf. Su mail es jperez@dc.uba.ar y su teléfono +54(11)4563-4567.''} se representa de la siguiente forma:
+\begin{verbatim}
+<?namespace href="http://dc.uba.ar/info-bibliografia" as="bib"?> 
+<RDF:serialization> 
+  <RDF:assertions href="http://dc.uba.ar/examen.pdf"> 
+    <bib:autor> 
+      <RDF:resource> 
+        <bib:nombre>Javier Perez</bib:nombre> 
+        <bib:mail>jperez@dc.uba.ar</bib:mail> 
+        <bib:telefono>+54(11)4563-4567</bib:telefono> 
+      </RDF:resource> 
+    </bib:autor> 
+  </RDF:assertions> 
+</RDF:serialization>
+\end{verbatim}
+
+\begin{center}
+\begin{figure}[H] %[h] Aqui [b] para button [t] para top
+\includegraphics[width=400pt]{./imgs/rdfModel.png}
+\caption{Modelo RDF.}
+\end{figure}
+Los nodos son las elipses, los ejes la relación y los rectángulos son strings.
+\end{center}
 
 \section{Problemas de la Web Semántica}
-En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas \textit{RDF} en consultas \textit{SQL} para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS). Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema de esto es que no se logra un buen rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMs no son capaces de optimizar eficientemente las consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación.
+En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas \textit{RDF} en consultas \textit{SQL} para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS), otra es hacer todos los datos implícitos. Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema de esto es que no se logra un buen rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMs no son capaces de optimizar eficientemente las consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación.
 
 \section{RDF pasada a bases de datos tradicionales}
 Las consultas RDF se pueden transformar en consultas de bases de datos relacionales sin mucha dificultad. A partir de la consulta transformada, es posible utilizar cualquiera de los dos métodos de vinculación de RDF para resolverla: saturación o reformulación.
