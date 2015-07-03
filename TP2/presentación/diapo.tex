@@ -5,6 +5,7 @@
 \usepackage{bbding}
 \usepackage[utf8]{inputenc}
 \usepackage{verbatim}
+\usepackage{enumitem}
 
 \mode<presentation> {
 \usetheme{Madrid}
@@ -348,19 +349,19 @@ Consulta que devuelve los actores que trabajaron en una película dirigida por u
 \section{Reformulación de Queries}
 \begin{frame}
 \frametitle{Reformulación de Queries}
-
-\begin{block}{Problema}
+\begin{itemize}[label={}]
+\item<1->\begin{block}{Problema}
 Las bases de datos para Web Semántica presentan datos implícitos que las RDBMs no tienen en cuenta a la hora de resolver las consultas.
 \end{block}
 
-\begin{exampleblock}{Una Solución}
+\item<2->\begin{exampleblock}{Una Solución}
 Se aplican técnicas de \underline{Reformulación} a la consulta entrante para luego traducirla a una consulta SQL que, al ser evaluada por el RDBMs, devuelve la respuesta completa.
 \end{exampleblock}
 
-\begin{center}
+\item<3->\begin{center}
 En la tesis de Damián Bursztyn se proponen algunas heurísticas que mejoran la performance del algoritmo de reformulación, que tiene complejidad exponencial.
 \end{center}
-
+\end{itemize}
 \end{frame}	
 
 %------------------------------------------------
