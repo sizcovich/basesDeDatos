@@ -63,7 +63,7 @@ Federico Allocati, Sabrina Izcovich, Santiago Pernigotti, Germán Romano\\ % You
 
 \item Los estándares más utilizados son \textbf{RDF} (\textit{Framework de Descripción de Recursos}) y \textbf{SPARQL} (\textit{Lenguaje de Queries RDF}).
 
-\item \textbf{RDF} se usa para el almacenado y representación de datos y \textbf{SPARQL} es el lenguaje de consulta que devuelve los datos de un almacenamiento \textbf{RDF}.
+\item \textbf{RDF} se usa para el almacenamiento y representación de datos y \textbf{SPARQL} es el lenguaje de consulta que devuelve los datos almacenados que correspondan \textbf{RDF}.
 \end{itemize}
 \end{frame}
 
@@ -76,7 +76,7 @@ Federico Allocati, Sabrina Izcovich, Santiago Pernigotti, Germán Romano\\ % You
 \begin{itemize}
 \item<1-> Web Extendida enfocada en el significado de las búsquedas.
 \item<2-> Se procesa la información en términos de su semántica a través de operaciones concretas.
-\item<3-> El software es capaz de procesar el contenido, razonar con este, combinarlo y realizar deducciones lógicas para resolver problemas cotidianos automáticamente.
+\item<3-> El software es capaz de procesar el contenido, $"$razonar$"$ con este, combinarlo y realizar deducciones lógicas para resolver problemas cotidianos automáticamente.
 \item<4-> Utiliza una infraestructura común mediante la cual es posible compartir, procesar y transferir información de forma sencilla.
 \item<5-> Otorga una solución a problemas habituales en la búsqueda de información ocasionados por la sobrecarga de información y heterogeneidad de fuentes de información.
 \end{itemize}
@@ -110,8 +110,8 @@ Federico Allocati, Sabrina Izcovich, Santiago Pernigotti, Germán Romano\\ % You
 \begin{itemize}
 \item<1-> Es un grafo dirigido etiquetado para representar información en la Web. Los nodos son lo que se relaciona en la Web.
 \item<2-> En particular, es el formato para modelar el intercambio de datos en la Web Semántica. 
-\item<3-> Facilita la fusión de datos con esquemas de organización distinto.
-\item<4-> Permite unir estructuras en la Web nombrando las relaciones entre nodos.
+\item<3-> Facilita la fusión de datos con esquemas de organización diferentes.
+\item<4-> Permite unir estructuras en la Web dando un nombre a las relaciones entre nodos.
 \item<5-> Su utilización permite estructurar los datos a ser fusionados, expuestos y compartidos a través de diferentes aplicaciones.
 \end{itemize}
 \end{block}
@@ -157,7 +157,7 @@ Los nodos son las elipses, los ejes la relación y los rectángulos son strings.
 \begin{itemize}
 \item<1-> Las consultas BGP son un subconjunto del lenguaje de consultas SPARQL W3C para RDF. 
 \item<2-> El mismo se corresponde con la clase de familias de consultas conjuntivas de las bases de datos relacionales. 
-\item<3-> Conforman las consultas SPARQL más utilizadas en el mundo real.
+\item<3-> Conforman las consultas SPARQL más utilizadas en a nivel mundial.
 \item<4-> Están compuestas por un conjunto de variables distinguidas, la cabeza y el conjunto de patrones de tripla (los BGP).
 \end{itemize}
 \end{exampleblock}
@@ -255,7 +255,7 @@ Consulta que devuelve los actores que trabajaron en una película dirigida por u
 \begin{block}{RDF y RDBMS}
 \begin{itemize}
 \item{Es posible transformar una consulta BGP en otra capaz de ser evaluada por RDBMS.}
-\item{Se almacenan los triples dentro de tablas y se reformula la consulta BGP por una equivalente.}
+\item{Se almacenan las triplas dentro de tablas y se reformula la consulta BGP por una equivalente.}
 \item{$q(x) : s_{1} p_{1} o_{1}, ..., s_{n} p_{n} o_{n}$ es equivalente a $q(x): \wedge ^n _{i = 1} Triples(s_{i}, p_{i}, o_{i})$}
 \item{Para resolver la consulta se empelean dos técnicas de manejo de vinculos RDF: Saturación o Reformulación.}
 \end{itemize}
@@ -291,7 +291,7 @@ Consulta que devuelve los actores que trabajaron en una película dirigida por u
 
 \begin{frame}
 \frametitle{Solución}
-Para solucionarlo, se aplican técnicas de \textbf{Reformulación} a la consulta entrante para luego traducirla a una consulta SQL que, al ser evaluada por el RDBMs devuelve la respuesta completa.
+Para solucionarlo, se aplican técnicas de \textbf{Reformulación} a la consulta entrante para luego traducirla a una consulta SQL que, al ser evaluada por el RDBMs, devuelve la respuesta completa.
 \end{frame}	
 
 %------------------------------------------------
