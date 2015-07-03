@@ -26,7 +26,7 @@ Federico Allocati, Sabrina Izcovich, Santiago Pernigotti, Germán Romano\\ % You
 \medskip
 %\textit{john@smith.com} % Your email address
 }
-\date{Miércoles 8 de julio de 2015} % Date, can be changed to a custom date
+\date{\today} % Date, can be changed to a custom date
 
 \begin{document}
 
@@ -250,17 +250,80 @@ Consulta que devuelve los actores que trabajaron en una película dirigida por u
 %------------------------------------------------
 \section{RDF y RDBMs}
 \begin{frame}
-\frametitle{RDF y Sistema de gestión de bases de datos relacionales}
-%------------------------------------------------
-\begin{block}{RDF y RDBMS}
+\frametitle{RDF y Sistemas de Gestión de BD Relacionales}
+
+\begin{block}{RDF y RDBMs}
 \begin{itemize}
-\item{Es posible transformar una consulta BGP en otra capaz de ser evaluada por RDBMS.}
-\item{Se almacenan las triplas dentro de tablas y se reformula la consulta BGP por una equivalente.}
-\item{$q(x) : s_{1} p_{1} o_{1}, ..., s_{n} p_{n} o_{n}$ es equivalente a $q(x): \wedge ^n _{i = 1} Triples(s_{i}, p_{i}, o_{i})$}
-\item{Para resolver la consulta se empelean dos técnicas de manejo de vinculos RDF: Saturación o Reformulación.}
+\item Es posible transformar una consulta BGP en otra capaz de ser evaluada por RDBMS.
+\vspace{1 mm}
+\item Se almacenan las triplas dentro de tablas y se reformula la consulta BGP por una equivalente.
+\vspace{1 mm}
+\item $q(x) : s_{1} p_{1} o_{1}, ..., s_{n} p_{n} o_{n}$ es equivalente a $q(x): \wedge ^n _{i = 1} Triples(s_{i}, p_{i}, o_{i})$
+\vspace{1 mm}
+\item Para resolver la consulta se emplean dos técnicas de manejo de vinculos RDF: \textbf{Saturación o Reformulación}.
 \end{itemize}
 \end{block}
 \end{frame}
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Ejemplo - Saturación}
+
+\textbf{Nuestro Dataset}:
+\begin{itemize}
+\item Hechos = $\lbrace$ \textit{$"$Sócrates es humano$"$} $\rbrace$
+\item Restricciones = $\lbrace$ \textit{$"$Todo humano es mortal$"$} $\rbrace$
+\end{itemize}
+
+\vspace{1 mm}
+
+\textbf{La query}: $q$ = \textit{$"$Devolver todos los mortales$"$}.
+
+\vspace{8 mm}
+
+\begin{exampleblock}{Saturación}
+
+\begin{itemize}
+\item Hace explícitos los datos implícitos, a partir de las restricciones.
+\item Se aplica una única vez a toda la BD (la extiende).
+\end{itemize}
+\hspace{1cm}$\Rightarrow$ \textbf{Se agrega el hecho \textit{$"$Sócrates es mortal$"$} a la BD}.
+
+\end{exampleblock}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Ejemplo - Reformulación}
+
+\textbf{Nuestro Dataset}:
+\begin{itemize}
+\item Hechos = $\lbrace$ \textit{$"$Sócrates es humano$"$} $\rbrace$
+\item Restricciones = $\lbrace$ \textit{$"$Todo humano es mortal$"$} $\rbrace$
+\end{itemize}
+
+\vspace{1 mm}
+
+\textbf{La query}: $q$ = \textit{$"$Devolver todos los mortales$"$}.
+
+\vspace{7 mm}
+
+\begin{exampleblock}{Reformulación}
+
+\begin{itemize}
+\item Se reformula la query teniendo en cuenta las restricciones.
+\item Se aplica a cada query, la BD no se modifica.
+\end{itemize}
+\hspace{1cm} $\Rightarrow$ \textbf{$q$ = $"$Todos los mortales$"$} \\
+\hspace{1.8cm} \textbf{$\leadsto$ $q'$ = $"$Todos los mortales y todos los humanos$"$}.
+
+\end{exampleblock}
+
+\end{frame}
+
+
 %------------------------------------------------
 
 \begin{frame}
@@ -284,14 +347,20 @@ Consulta que devuelve los actores que trabajaron en una película dirigida por u
 %------------------------------------------------
 \section{Reformulación de Queries}
 \begin{frame}
-\frametitle{Problema}
-\centering
-\textit{Las bases de datos para Web Semántica presentan datos implícitos que las RDBMs no tienen en cuenta a la hora de resolver las consultas.}
-\end{frame}	
+\frametitle{Reformulación de Queries}
 
-\begin{frame}
-\frametitle{Solución}
-Para solucionarlo, se aplican técnicas de \textbf{Reformulación} a la consulta entrante para luego traducirla a una consulta SQL que, al ser evaluada por el RDBMs, devuelve la respuesta completa.
+\begin{block}{Problema}
+Las bases de datos para Web Semántica presentan datos implícitos que las RDBMs no tienen en cuenta a la hora de resolver las consultas.
+\end{block}
+
+\begin{exampleblock}{Una Solución}
+Se aplican técnicas de \underline{Reformulación} a la consulta entrante para luego traducirla a una consulta SQL que, al ser evaluada por el RDBMs, devuelve la respuesta completa.
+\end{exampleblock}
+
+\begin{center}
+En la tesis de Damián Bursztyn se proponen algunas heurísticas que mejoran la performance del algoritmo de reformulación, que tiene complejidad exponencial.
+\end{center}
+
 \end{frame}	
 
 %------------------------------------------------
