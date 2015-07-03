@@ -101,22 +101,6 @@ En la siguiente tabla se pueden observar posibles tipos de restricciones. $Domai
 El exponencial crecimiento de los datos en la web deja en claro la necesidad de complementar el estudio de la Web Semántica con dos disciplinas bien desarrolladas: modelado conceptual y manejo de datos. 
 \\
 El Modelado Conceptual se encarga del desarrollo de técnicas avanzadas y herramientas que permiten la representación precisa y el razonamiento de artefactos que modelan objetos e información del mundo real. El Manejo de Datos, en cambio, se encarga del desarrollo de técnicas para el eficiente almacenamiento, consultas, recuperación y manejo de grandes volúmenes de información de diferente naturaleza, es decir, datos relacionales, documentos XML, blogs, etc.
-\begin{comment}
-\\
-A continuación se presentan contribuciones que abarcan las tres áreas; Web Semántica, Modelado Conceptual y Manejo de Datos.
-\\\\
-\textbf{Quality-aware} propone algunas estrategias para diseñar funciones de similitud que capturan el grado de libertad para la equivalencia de dos entidades dadas. El método se basa en la combinación de múltiples evidencias, con la ayuda de calidad estimada de valores individuales similares y con la particular atención a la perdida de información, que es común en el contexto de la web. 
-\\\\
-\textbf{Structured Data Clouding across Multiple Webs} introduce la noción de inCloud, una colección de recursos web relacionados construidos para una entidad objetivo de interés mediante la distinción, también en una forma visual, de que tan prominente es cada recurso web recibido con respecto a la entidad dada
-\\\\
-\textbf{Ontological Query Answering under Expressive Entity-Relationship Shemata} contribuye a reducir la brecha entre modelos conceptuales y razonamiento semántico, abordando el problema de respuestas a consultas conjuntivas bajo restricciones representadas por esquemas expresados en ER+, una extensión del modelo entidad-relación.
-\\\\
-\textbf{PEST: Fast Approximate Keyword Search in Semantic Data using Eigenvector-based Term Propagation} presenta un novedoso enfoque a las consultas aproximadas de datos sobre grafos-estructurados RDF que propagan términos ponderados entre ítems de datos que son conectados en la estructura de datos.
-\\\\
-\textbf{An Ontology-Based Retrieval System Using Semantic Indexing} introduce un sistema para ontologías basadas en extracción de información.
-\\\\
-\textbf{A step forward is taken in PoweR-Gen: A Power-law Based Generator of RDFS Schemas} presenta el primer generador de esquemas RDF, teniendo en cuenta las características exhibidas por los esquemas reales SW.
-\end{comment}
 
 \section{SPARQL}
 Es el estándar W3C para consultas RDF. En otras palabras, es un lenguaje de consultas semánticas para bases de datos, habilitado para devolver y manipular datos guardados en el formato RDF. El mismo permite hacer búsquedas sobre los recursos de la Web Semántica utilizando distintas fuentes datos.
@@ -198,6 +182,8 @@ Mediante dos técnicas establecidas para el manejo de vinculación RDF, llamadas
 \end{center}
 \end{figure}
 
+\section{Problemas de la Web Semántica y posibles soluciones}
+El creciente uso de Web Semántica impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas RDF sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas RDF en consultas SQL para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS). Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema que esta solución presenta es de rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMSs no son capaces de optimizar eficientemente estas consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación. En lo que sigue, veremos el método de Reformulación de Consultas, altamente utilizado para Web Semántica.
 
 \section{Reformulación de Consultas}
 
@@ -285,9 +271,6 @@ Aplicando el algoritmo de reformulación se obtiene, siendo S el esquema de D, a
 \begin{center}
 \includegraphics[scale=0.35]{imgs/ejReformulation2.png}
 \end{center}
-
-\section{Problemas de la Web Semántica y Posibles Soluciones}
-En el último tiempo, el uso de Web Semántica creció enormemente e impulsó la necesidad de emplear técnicas eficientes y escalables para responder a las consultas RDF sobre una gran cantidad de datos heterogéneos. Una posible solución a este problema consiste en traducir las consultas RDF en consultas SQL para ejecutarlas en los sistemas de gestión de bases de datos relacionales (RDBMS). Sin embargo, las bases de datos para Web Semántica complican a las tecnologías clásicas de gestión de datos que no tienen en cuenta los datos implícitos durante la evaluación de consultas. Una solución a esto es reformular la consulta entrante para luego traducirla en una consulta SQL que, al ser evaluada por el RDBMS, devuelve las respuestas completas. El problema que esta solución presenta es de rendimiento debido a la longitud sintáctica de las consultas SQL que resultan de reformulación. Los RDBMSs no son capaces de optimizar eficientemente estas consultas, por lo que en algunos casos fallan o registran tiempos elevados de evaluación.
 
 \section{Referencias}
 
